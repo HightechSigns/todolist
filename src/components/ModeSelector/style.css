@@ -1,0 +1,26 @@
+.mode-selector-cont{
+    display:flex;
+}
+.mode-text{
+    margin: auto 15px auto 0;
+}
+.mode-selector{
+    width: 50px;
+    height: 25px;
+    background:white;
+    border-radius: 50px;
+    position: relative;
+    align-items: center;
+    display: flex;
+    border: 2px solid #16262E;
+}
+.mode-button{
+    height:27px;
+    width:27px;
+    background:#16262E;
+    position:absolute;
+    border-radius: 100%;
+    border: 2px solid #16262E;
+    left: -2px;
+    z-index: 1;
+}
