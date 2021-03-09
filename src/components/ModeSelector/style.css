@@ -1,13 +1,16 @@
 .mode-selector-cont{
     display:flex;
+    margin-top: 20px;
+    width: 170px;
+    justify-content: end;
 }
 .mode-text{
     margin: auto 15px auto 0;
 }
 .mode-selector{
-    width: 50px;
-    height: 25px;
-    background:white;
+    width: 35px;
+    height: 20px;
+    /* background:white; */
     border-radius: 50px;
     position: relative;
     align-items: center;
@@ -15,12 +18,14 @@
     border: 2px solid #16262E;
 }
 .mode-button{
-    height:27px;
-    width:27px;
-    background:#16262E;
+    height:22px;
+    width:22px;
+    /* background:#16262E; */
     position:absolute;
     border-radius: 100%;
     border: 2px solid #16262E;
-    left: -2px;
+    /* left: -2px; */
     z-index: 1;
+    cursor: pointer;
+    
 }

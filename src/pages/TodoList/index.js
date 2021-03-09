@@ -9,6 +9,18 @@ import ModeSelector from '../../components/ModeSelector';
 
 
 export default function TodoList({ db }) {
+    const [toggle, setToggle] = useState(false);
+    const modeStyles = {
+        darkMode: {
+            background: '#16262E',
+            color: 'white'
+        },
+        lightMode: {
+            background: 'White',
+            color: '#16262E',
+            transition: 'all 250ms ease-out'
+        }
+    }
     const [listValues, setListValues] = useState(
         {
             _id: '',
@@ -26,10 +38,15 @@ export default function TodoList({ db }) {
     )
 
     return (
-        <div className="todo-main-page">
-            <div className="header">
-                <OnOffLineUser />
-                <ModeSelector />
+        <div className="todo-main-page" style={toggle ? modeStyles.darkMode : modeStyles.lightMode}>
+            <div className="header-main-cont">
+                <OnOffLineUser
+                    toggle={toggle}
+                />
+                <ModeSelector
+                    toggle={toggle}
+                    setToggle={setToggle}
+                />
             </div>
             <section className="main-body-cont">
 
