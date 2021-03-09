@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;
     width: 170px;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .on-off-text{
     margin-right: 15px;

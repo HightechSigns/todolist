@@ -1,0 +1,57 @@
+.sidebar-lists {
+    width: 270px;
+    height: 800px;
+}
+.title-add-cont {
+    display: flex;
+    width: 260px;
+    justify-content: space-between;
+    position: relative;
+}
+.add-list-name-modal {
+    position: absolute;
+    padding: 10px;
+    width: 260px;
+    background: #2e4756;
+    top: -80px;
+    z-index: 100;
+    border-radius: 5px;
+    box-shadow: 0 6px 13px rgba(0, 0, 0, 0.356);
+}
+.alnm-triangle {
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 20px solid #2e4756;
+    position: absolute;
+    bottom: -15px;
+    right: 10px;
+    
+}
+.add-name-input {
+    font-size: 16px;
+    background: none;
+    color: white;
+    border: none;
+    padding: 7px;
+    width: 100%;
+    outline: none;
+}
+
+.list-names-cont{
+    width: 260px;
+    height: 100%;
+    padding-top: 30px;
+}
+.list-name{
+    padding:15px;
+    display: flex;
+    justify-content: space-between;
+}
+.list-name:hover{
+    cursor: pointer;
+    background:#2E4756;
+    border-radius: 5px;
+    color: white;
+}

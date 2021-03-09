@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import "./style.css";
 
 export default function ModeSelector({toggle,
@@ -6,8 +6,10 @@ export default function ModeSelector({toggle,
   const handleToggle= (e)=>{
     if(e && !toggle){
       setToggle(true)
+      localStorage.setItem("toggle",true)
     } else{
       setToggle(false)
+      localStorage.setItem("toggle",false)
     }
   }
   const styles = {
@@ -24,13 +26,20 @@ export default function ModeSelector({toggle,
     },
     buttonStyleLight:{
       background:'#16262E',
-      left: '-2px',
-      // transition: 'all 250ms ease-in-out'
+      left: '-2px'
     }
   }
+  useEffect(() => {
+    let togVal = localStorage.getItem('toggle');
+    if (togVal === "true") {
+        setToggle(true)
+    } else {
+        setToggle(false)
+    }
+})
     return (
         <div className="mode-selector-cont">
-          <p className="mode-text">Dark Mode</p>
+          <p className="mode-text">{toggle? "Light Mode": 'Dark Mode'}</p>
           <div className="mode-selector" style={toggle? styles.darkModeToggle:styles.lightModeToggle}>
                 <div className="mode-button" style={toggle? styles.buttonStyleDark:styles.buttonStyleLight} onClick={e=>handleToggle(e)}></div>
           </div>

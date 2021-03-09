@@ -2,7 +2,7 @@
     display:flex;
     margin-top: 20px;
     width: 170px;
-    justify-content: end;
+    justify-content: flex-end;
 }
 .mode-text{
     margin: auto 15px auto 0;
@@ -15,7 +15,7 @@
     position: relative;
     align-items: center;
     display: flex;
-    border: 2px solid #16262E;
+    border: 2px solid #1f1f1f;
 }
 .mode-button{
     height:22px;
@@ -23,7 +23,7 @@
     /* background:#16262E; */
     position:absolute;
     border-radius: 100%;
-    border: 2px solid #16262E;
+    border: 2px solid #1f1f1f;
     /* left: -2px; */
     z-index: 1;
     cursor: pointer;
