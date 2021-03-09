@@ -3,22 +3,25 @@ import { v4 as uuidv4 } from 'uuid';
 import './style.css';
 import addLight from '../../assets/images/addLight.svg'
 import addDark from '../../assets/images/addDark.svg'
-import trashDark from '../../assets/images/trashDark.svg'
 import trashLight from '../../assets/images/trashLight.svg'
 //steps
 // need to have a post to the indexed db from here to create new list name
 // this is where I will get the data back from indexed db and send it into 
 // the redux state
 
-export default function ListsSideBar({ toggle }) {
+export default function ListsSideBar({ toggle,activeId, setActiveId }) {
     const [add, setAdd] = useState(false);
     const [hover, setHover] = useState(false);
+    
     // need to get the value for the new list name
     const [listNameVal, setListNameVal] = useState('')
 
     const handleChange = (e) => {
         setListNameVal(e.target.value);
-        
+    }
+    // handle the delete of the list
+    const handleDeleteList = (id) => {
+        console.log(id)
     }
 
     const handleSubmit = (e) => {
@@ -32,6 +35,9 @@ export default function ListsSideBar({ toggle }) {
         } else {
             setAdd(false)
         }
+    }
+    const handleActiveList = (id)=>{
+        setActiveId(id)
     }
     const AddListModal = () => {
         return (
@@ -51,10 +57,12 @@ export default function ListsSideBar({ toggle }) {
                 <img onClick={e => handleAddClick(e)} src={toggle ? addLight : addDark} alt="#" style={{ cursor: 'pointer' }} />
             </div>
             <div className="list-names-cont">
-                <div className='list-name' onMouseOver={e => setHover(true)} onMouseLeave={e => setHover(false)}>
+            {/* this will be mapped when data gets loaded */}
+                <div className='list-name' onClick={e=>handleActiveList('adlfh12l34h5lkj34btb')} onMouseOver={e => setHover(true)} onMouseLeave={e => setHover(false)} style={activeId === 'adlfh12l34h5lkj34btb' ? {borderRight:'2px inset #20FC8F'}:{border:'none'}}>
                     <p>Coding Tasks</p>
-                    {hover ? <img src={trashLight} alt="#" style={{ cursor: 'pointer' }} /> : ''}
+                    {hover ? <img src={trashLight} alt="#" onClick={e=>handleDeleteList('adlfh12l34h5lkj34btb')} style={{ cursor: 'pointer' }} /> : ''}
                 </div>
+            {/* ---------------------------------------- */}
             </div>
         </div>
     )

@@ -52,6 +52,6 @@
 .list-name:hover{
     cursor: pointer;
     background:#2E4756;
-    border-radius: 5px;
+    border-radius: 5px 0 0 5px;
     color: white;
 }

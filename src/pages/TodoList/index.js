@@ -9,6 +9,7 @@ import ModeSelector from '../../components/ModeSelector';
 
 export default function TodoList({ db }) {
     const [toggle, setToggle] = useState(false);
+    const [activeId, setActiveId] = useState('');
     const modeStyles = {
         darkMode: {
             background: '#1f1f1f',
@@ -20,13 +21,6 @@ export default function TodoList({ db }) {
             transition: 'all 300ms ease-out'
         }
     }
-    const [listValues, setListValues] = useState(
-        {
-            _id: '',
-            listName: '',
-            todos: []
-        })
-    
     //creating the DB when page loads
     useEffect(() => {
         // create the store
@@ -52,8 +46,10 @@ export default function TodoList({ db }) {
 
                 <ListsSideBar
                     toggle={toggle}
+                    activeId={activeId}
+                    setActiveId={setActiveId}
                 />
-                
+
             </section>
         </div>
     )
