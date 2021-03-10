@@ -4,14 +4,16 @@
 }
 .title-add-cont {
     display: flex;
-    width: 260px;
+    max-width: 260px;
+    width: 100%;
     justify-content: space-between;
     position: relative;
 }
 .add-list-name-modal {
     position: absolute;
     padding: 10px;
-    width: 260px;
+    max-width: 260px;
+    width: 100%;
     background: #2e4756;
     top: -80px;
     z-index: 100;
@@ -50,8 +52,25 @@
     justify-content: space-between;
 }
 .list-name:hover{
-    cursor: pointer;
     background:#2E4756;
     border-radius: 5px 0 0 5px;
     color: white;
 }
+@media only screen and (max-height: 850px) {
+    .sidebar-lists {
+        height: 450px;
+        min-width: 200px;
+    }
+    .title-add-cont, .list-names-cont{
+        min-width: 190px;
+    }
+  }
+@media only screen and (max-width: 550px) {
+    .sidebar-lists {
+        height: 450px;
+        width: 200px;
+    }
+    .title-add-cont, .list-names-cont{
+        width: 190px;
+    }
+  }

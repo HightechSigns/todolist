@@ -4,6 +4,7 @@ import './style.css';
 import OnOffLineUser from '../../components/OnOffLineUser';
 import ListsSideBar from '../../components/ListsSideBar';
 import ModeSelector from '../../components/ModeSelector';
+import TasksSide from '../../components/TasksSide';
 
 
 
@@ -43,13 +44,14 @@ export default function TodoList({ db }) {
                 />
             </div>
             <section className="main-body-cont">
-
                 <ListsSideBar
                     toggle={toggle}
                     activeId={activeId}
                     setActiveId={setActiveId}
                 />
-
+                <TasksSide
+                toggle={toggle}
+                />
             </section>
         </div>
     )
