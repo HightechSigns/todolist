@@ -5,12 +5,14 @@ import OnOffLineUser from '../../components/OnOffLineUser';
 import ListsSideBar from '../../components/ListsSideBar';
 import ModeSelector from '../../components/ModeSelector';
 import TasksSide from '../../components/TasksSide';
+//import DB
+import db from '../../Database/DBLoacalBase';
 
 
-
-export default function TodoList({ db }) {
+export default function TodoList() {
     const [toggle, setToggle] = useState(false);
     const [activeId, setActiveId] = useState('');
+    const [taskData, settaskData] = useState([]);
     const modeStyles = {
         darkMode: {
             background: '#1f1f1f',
@@ -22,15 +24,18 @@ export default function TodoList({ db }) {
             transition: 'all 300ms ease-out'
         }
     }
-    //creating the DB when page loads
+ 
+    //getting items from DB when page loads
     useEffect(() => {
-        // create the store
-        db.version(1).stores({ lists: '_id,listName,todos' })
-        db.open().catch((err) => {
-            console.log(err.stack || err)
-        })
-    }, [db]
-    )
+        if(db.collection('tasklist')){
+            db.collection('tasklist').get().then(tasklists => {
+                console.log(tasklists)
+                settaskData(tasklists)
+              })
+        } else{
+            console.log('No DB')
+        }
+       }, [db])
 
     return (
         <div className="todo-main-page" style={toggle ? modeStyles.darkMode : modeStyles.lightMode}>
@@ -48,9 +53,14 @@ export default function TodoList({ db }) {
                     toggle={toggle}
                     activeId={activeId}
                     setActiveId={setActiveId}
+                    db={db}
+                    taskData={taskData}
                 />
                 <TasksSide
                 toggle={toggle}
+                db={db}
+                taskData={taskData}
+                activeId={activeId}
                 />
             </section>
         </div>

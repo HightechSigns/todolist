@@ -1,6 +1,7 @@
 .sidebar-lists {
     width: 270px;
     height: 800px;
+    padding-right: 10px;
 }
 .title-add-cont {
     display: flex;

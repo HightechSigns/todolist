@@ -5,7 +5,7 @@ import {
   Link
 } from "react-router-dom";
 import TodoList from "./pages/TodoList";
-import Dexie from 'dexie';
+
 
 
 function App() {
@@ -13,7 +13,7 @@ function App() {
     <Router>
        <Switch>
           <Route path="/">
-          <TodoList db={new Dexie('TodoList')}/>
+          <TodoList/>
           </Route>
         </Switch>
     </Router>
