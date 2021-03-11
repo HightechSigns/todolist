@@ -29,3 +29,6 @@
     cursor: pointer;
     
 }
+.mode-button:hover{
+    background: #14d1ee;
+}

@@ -81,7 +81,7 @@ export default function TasksSide({ toggle, db, taskData, activeId }) {
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
                     {loadedTasks && loadedTasks.length <= 1 ? loadedTasks.map((t, i) => (
-                        <div className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
+                        <div key={i} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
                                     {taskSuccessID && taskSuccessID === t.id? <img src={checkLight} alt="" /> : ''}
