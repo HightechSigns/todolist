@@ -27,7 +27,7 @@ export default function TodoList() {
  
     //getting items from DB when page loads
     useEffect(() => {
-        if(db.collection('tasklist')){
+        if(db){
             db.collection('tasklist').get().then(tasklists => {
                 console.log(tasklists)
                 settaskData(tasklists)
@@ -35,7 +35,7 @@ export default function TodoList() {
         } else{
             console.log('No DB')
         }
-       }, [db])
+       }, [])
 
     return (
         <div className="todo-main-page" style={toggle ? modeStyles.darkMode : modeStyles.lightMode}>
