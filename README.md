@@ -1,5 +1,5 @@
 # The Reason for this Project 
-To create a fully offline app that can also work online. I wanted to get better at IndexedDB and use some new UI/UX features I have learned.
+To create a fully offline app that can also work online. I wanted to get better at IndexedDB, redux, and use some new UI/UX features I have learned.
 
 # Getting Started with Todo List
 
