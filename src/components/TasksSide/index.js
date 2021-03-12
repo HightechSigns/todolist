@@ -3,11 +3,19 @@ import './style.css';
 import trashLight from "../../assets/images/trashLight.svg";
 import checkLight from "../../assets/images/checkLight.svg";
 import { v4 as uuidv4 } from "uuid";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function TasksSide({ toggle, db, taskData, activeId }) {
+
+export default function TasksSide({db}) {
     const [taskSuccessID, setTaskSuccessID] = useState('');
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
+    //redux
+    const actID = useSelector(state => state.actID);
+    const toggle = useSelector(state => state.toggle);
+    const data = useSelector(state => state.data);
+    const dispatch = useDispatch();
+    //-----
 
     const IfNoItems = () => {
         return (
@@ -18,25 +26,21 @@ export default function TasksSide({ toggle, db, taskData, activeId }) {
     }
     //get the data from the activeID
     const getTasks = () => {
-        if (db || activeId !== undefined) {
-            db.collection('tasklist').doc({ id: activeId }).get().then(t => {
-                setLoadedTasks(t)
-            })
-        } else {
-            console.log('click a list name')
-        }
+        data.filter(x => {
+            setLoadedTasks(x.id === actID);
+        })
     }
     // handle the new task upload
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log('posted')
-        if (e && activeId) {
+        if (e && actID) {
             let taskObj = {
                 id: uuidv4(),
                 text: taskInput,
                 comp: false
             }
-            db.collection('tasklist').doc({ id: activeId }).update({
+            db.collection('tasklist').doc({ id: actID }).update({
                 tasks: taskObj
             })
             loadedTasks.push(taskObj)
@@ -59,7 +63,7 @@ export default function TasksSide({ toggle, db, taskData, activeId }) {
     const handleChange = (e) => {
         setTaskInput(e.target.value)
     }
-    
+
     // add task component
     const addTask = () => (
         <div className="task-input-cont">
@@ -70,21 +74,21 @@ export default function TasksSide({ toggle, db, taskData, activeId }) {
     )
     //Use effect
     useEffect(() => {
-        // getTasks()
-    }, [loadedTasks])
+        getTasks();
+    }, [actID])
 
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            {taskData && taskData.length === 0 ? IfNoItems() : ''}
-            {taskData && taskData.length !== 0 ?
+            {loadedTasks.length === 0 ? IfNoItems() : ''}
+            {loadedTasks.length !== 0 ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
                     {loadedTasks && loadedTasks.length <= 1 ? loadedTasks.map((t, i) => (
                         <div key={i} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
-                                    {taskSuccessID && taskSuccessID === t.id? <img src={checkLight} alt="" /> : ''}
+                                    {taskSuccessID && taskSuccessID === t.id ? <img src={checkLight} alt="" /> : ''}
                                 </div>
                                 <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={taskSuccessID && taskSuccessID === t.id ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
                             </div>
@@ -99,7 +103,7 @@ export default function TasksSide({ toggle, db, taskData, activeId }) {
                     {/* mapped tasks */}
                 </div>
                 : ''}
-            {taskData && taskData.length !== 0 ? addTask() : ''}
+            {loadedTasks.length !== 0 ? addTask() : ''}
         </div>
     )
 }

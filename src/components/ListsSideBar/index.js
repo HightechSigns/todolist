@@ -1,18 +1,25 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
 import trashLight from "../../assets/images/trashLight.svg";
+import { useDispatch, useSelector } from "react-redux";
+//import the actions
+import { getData, setActiveId } from '../../actions';
 
 
-
-export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskData }) {
+export default function ListsSideBar({ db, loaded }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
   // need to get the value for the new list name
   const [listNameVal, setListNameVal] = useState("");
 
+
+  const actID = useSelector(state => state.actID);
+  const toggle = useSelector(state => state.toggle);
+  const data = useSelector(state => state.data);
+  const dispatch = useDispatch();
 
   // handle input change for list name
   const handleChange = (e) => {
@@ -21,8 +28,13 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
   // handle the delete of the list
   const handleDeleteList = (id) => {
     console.log(id);
-    db.collection('tasklist').doc({ id: id }).delete()
-    window.location.reload(false);
+    // delete from DB
+    db.collection('tasklist').doc({ id: id }).delete();
+    // delete from current state
+    var lists = data.filter(x => {
+      return x.id != id;
+    })
+    dispatch(getData(lists))
   };
   // handle the creating a name
   const handleSubmit = (e) => {
@@ -32,11 +44,26 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
       name: listNameVal,
       tasks: []
     }
-    db.collection('tasklist').add(obj)
+    // db.collection('tasklist').add(obj)
+    //-----------------------------
+    db.collection('tasklist')
+      .add(obj)
+      .then(response => {
+        console.log('Posted new List Name!')
+        console.log(response)
+      })
+      .catch(error => {
+        console.log('There was an error Posting The New List')
+      })
+    //-----------------------------
+    //set the current data to have the new List
+    data.push(obj) // dont know if this will work
+    //-----------------------------
+    //-----------------------------
     // setActiveId(obj.id)
     localStorage.setItem("activeList", obj.id)
     setAdd(false);
-    window.location.reload(false);
+    // window.location.reload(false);
   };
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
@@ -49,7 +76,7 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
     localStorage.setItem("activeList", id)
-    setActiveId(id);
+    dispatch(setActiveId(id))
   };
 
   // modal for adding new list
@@ -68,12 +95,6 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
       </div>
     );
   };
-
-useEffect(() => {
-  let activeId= localStorage.getItem("activeList")
-  setActiveId(activeId)
-}, [taskData])
-
 
   return (
     <div
@@ -98,7 +119,7 @@ useEffect(() => {
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {taskData ? taskData.map((d, i) => (
+        {data && loaded ? data.map((d, i) => (
           <div
             key={i}
             className="list-name"
@@ -106,9 +127,9 @@ useEffect(() => {
             onMouseOver={(e) => setHover(true)}
             onMouseLeave={(e) => setHover(false)}
             style={
-              activeId === d.id && toggle
+              actID === d.id && toggle
                 ? { borderRight: "2px inset #20FC8F" }
-                : activeId === d.id && !toggle
+                : actID === d.id && !toggle
                   ? {
                     borderRight: "3px inset #2e4756",
                     paddingRight: "10px",

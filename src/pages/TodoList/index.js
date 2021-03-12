@@ -1,5 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import './style.css';
+import { useDispatch, useSelector } from "react-redux";
+//import the actions
+import { getData} from '../../actions';
 // components
 import OnOffLineUser from '../../components/OnOffLineUser';
 import ListsSideBar from '../../components/ListsSideBar';
@@ -9,11 +12,11 @@ import TasksSide from '../../components/TasksSide';
 import db from '../../Database/DBLoacalBase';
 
 
+
 export default function TodoList() {
-    const [toggle, setToggle] = useState(false);
-    const [activeId, setActiveId] = useState('');
-    const [taskData, settaskData] = useState([]);
-    
+    const [loaded, setLoaded] = useState(false);
+    const toggle = useSelector(state => state.toggle);
+    const dispatch = useDispatch();
 
     const modeStyles = {
         darkMode: {
@@ -26,43 +29,36 @@ export default function TodoList() {
             transition: 'all 300ms ease-out'
         }
     }
- 
+
     //getting items from DB when page loads
     useEffect(() => {
-        if(db){
-            db.collection('tasklist').get().then(tasklists => {
-                console.log(tasklists)
-                settaskData(tasklists)
-              })
-        } else{
-            console.log('No DB')
+        async function addData() {
+            await db.collection('tasklist').get().then(taskLists => {
+                console.log("Here is the data that has been added")
+                console.log(taskLists)
+                dispatch(getData(taskLists))
+            })
+            console.log('Data has been added')
+            setLoaded(true)
         }
-       }, [])
+        addData()
+        // this is to load last edited task list when opening app
+        // let localActiveId = localStorage.getItem("activeList");
+    }, [])
 
     return (
         <div className="todo-main-page" style={toggle ? modeStyles.darkMode : modeStyles.lightMode}>
             <div className="header-main-cont">
-                <OnOffLineUser
-                    toggle={toggle}
-                />
-                <ModeSelector
-                    toggle={toggle}
-                    setToggle={setToggle}
-                />
+                <OnOffLineUser />
+                <ModeSelector />
             </div>
             <section className="main-body-cont">
                 <ListsSideBar
-                    toggle={toggle}
-                    activeId={activeId}
-                    setActiveId={setActiveId}
-                    db={db}
-                    taskData={taskData}
+                db={db}
+                loaded={loaded}
                 />
                 <TasksSide
-                toggle={toggle}
                 db={db}
-                taskData={taskData}
-                activeId={activeId}
                 />
             </section>
         </div>
