@@ -1,3 +1,6 @@
+# The Reason for this Project 
+To create a fully offline app that can also work online. I wanted to get better at IndexedDB and use some new UI/UX features I have learned.
+
 # Getting Started with Todo List
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
