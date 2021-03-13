@@ -56,16 +56,16 @@ export default function ListsSideBar({ db, loaded }) {
       });
     //-----------------------------
     //set the current data to have the new List
-    data.push(obj); // dont know if this will work
+    data[0].push(obj); // dont know if this will work
     //-----------------------------
     //-----------------------------
-    // setActiveId(obj.id)
+    // this sets the active id to the new list that was just created
     localStorage.setItem("activeList", obj.id);
     setAdd(false);
     // window.location.reload(false);
   };
 
-  
+
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
     if (e && !add) {
@@ -76,8 +76,16 @@ export default function ListsSideBar({ db, loaded }) {
   };
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
-    localStorage.setItem("activeList", id);
-    dispatch(setActiveId(id));
+    if(id !== undefined){
+      localStorage.setItem("activeList", id);
+      console.log("------ newest active ID -----")
+      dispatch(setActiveId(id));
+      console.log(id)
+      console.log("------ newest active ID -----")
+    } else{
+      console.log("no id to make active")
+    }
+    
   };
 
   // modal for adding new list
@@ -120,8 +128,7 @@ export default function ListsSideBar({ db, loaded }) {
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {data && loaded
-          ? data.map((d, i) => (
+        {data && loaded? data[0].map((d, i) => (
               <div
                 key={i}
                 className="list-name"

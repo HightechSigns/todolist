@@ -26,7 +26,7 @@ export default function TasksSide({db}) {
     }
     //get the data from the activeID
     const getTasks = () => {
-        data.filter(x => {
+        data[0].filter(x => {
             setLoadedTasks(x.id === actID);
         })
     }
@@ -43,8 +43,7 @@ export default function TasksSide({db}) {
             db.collection('tasklist').doc({ id: actID }).update({
                 tasks: taskObj
             })
-            loadedTasks.push(taskObj)
-            // console.log(taskObj)
+            loadedTasks[0].push(taskObj)
             setTaskInput('')
         } else {
             console.log('no active list')
@@ -75,7 +74,7 @@ export default function TasksSide({db}) {
     //Use effect
     useEffect(() => {
         getTasks();
-    }, [actID])
+    }, [])
 
     return (
         <div className="task-section">

@@ -39,7 +39,7 @@ export default function ModeSelector() {
   useEffect(() => {
     let togVal = localStorage.getItem('toggle');
     console.log('----------- local storage toggle value --------');
-    console.log(typeof(togVal) );
+    console.log(typeof(togVal));
     console.log('----------- local storage toggle value --------');
     if (togVal === 'true' && toggle === false) {
       // setToggle(true)
