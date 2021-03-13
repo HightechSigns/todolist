@@ -34,8 +34,9 @@ export default function TodoList() {
     useEffect(() => {
         async function addData() {
             await db.collection('tasklist').get().then(taskLists => {
-                console.log("Here is the data that has been added")
+                console.log("----- Loaded Data from todolist.js inside of state -------")
                 console.log(taskLists)
+                console.log("----- Loaded Data from todolist.js -------")
                 dispatch(getData(taskLists))
             })
             console.log('Data has been added')

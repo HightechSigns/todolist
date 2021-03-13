@@ -11,14 +11,16 @@ export const setActiveId = (a) => {
     }
 }
 export const onToggle = (a) => {
+    console.log('onToggle hit!')
     return {
-        type: 'ON-TOGGLE',
+        type: 'TOGGLE_ON',
         payload: a
     }
 }
 export const offToggle = (a) => {
+    console.log('offToggle hit!')
     return {
-        type: 'OFF-TOGGLE',
+        type: 'TOGGLE_OFF',
         payload: a
     }
 }

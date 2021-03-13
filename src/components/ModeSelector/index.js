@@ -12,7 +12,7 @@ export default function ModeSelector() {
 
   const handleToggle = (e) => {
     if (e && !toggle) {
-      dispatch(onToggle(true))
+      dispatch(onToggle())
       localStorage.setItem("toggle", true)
     } else {
       dispatch(offToggle(false))
@@ -38,12 +38,12 @@ export default function ModeSelector() {
   }
   useEffect(() => {
     let togVal = localStorage.getItem('toggle');
-    if (togVal === "true") {
+    console.log('----------- local storage toggle value --------');
+    console.log(typeof(togVal) );
+    console.log('----------- local storage toggle value --------');
+    if (togVal === 'true' && toggle === false) {
       // setToggle(true)
-      dispatch(onToggle(true))
-    } else {
-      // setToggle(false)
-      dispatch(offToggle(false))
+      dispatch(onToggle())
     }
   })
   return (
