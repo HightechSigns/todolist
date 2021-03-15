@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 
 
-export default function TasksSide({db}) {
+export default function TasksSide({ db }) {
     const [taskSuccessID, setTaskSuccessID] = useState('');
-    const [loadedTasks, setLoadedTasks] = useState([]);
+    const [loadedTasks, setLoadedTasks] = useState(['nothing']);
     const [taskInput, setTaskInput] = useState('');
     //redux
     const actID = useSelector(state => state.actID);
@@ -26,13 +26,22 @@ export default function TasksSide({db}) {
     }
     //get the data from the activeID
     const getTasks = () => {
-        data[0].filter(x => {
-            setLoadedTasks(x.id === actID);
-        })
+        if (data[0].length === 0) {
+            console.log("There are no tasks in this list")
+        } else{
+            data[0].filter(x => {
+                let arr = x.id === actID;
+                setLoadedTasks(arr);
+                console.log("Loaded tasks into state")
+                console.log(loadedTasks)
+                console.log("Loaded tasks into state")
+            })
+        }
     }
-    // handle the new task upload
+    // handle the new task upload  
     const handleSubmit = (e) => {
         e.preventDefault();
+        let newArray = [];
         console.log('posted')
         if (e && actID) {
             let taskObj = {
@@ -40,17 +49,18 @@ export default function TasksSide({db}) {
                 text: taskInput,
                 comp: false
             }
+            newArray.push(taskObj)
             db.collection('tasklist').doc({ id: actID }).update({
-                tasks: taskObj
+                tasks: newArray
             })
-            loadedTasks[0].push(taskObj)
+            setLoadedTasks(newArray)
             setTaskInput('')
         } else {
             console.log('no active list')
         }
     }
 
-    //need a component to load data and show it. 
+    //need a component to load data and show it.  
 
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
@@ -74,7 +84,7 @@ export default function TasksSide({db}) {
     //Use effect
     useEffect(() => {
         getTasks();
-    }, [])
+    },[loadedTasks])
 
     return (
         <div className="task-section">

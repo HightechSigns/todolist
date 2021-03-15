@@ -37,9 +37,7 @@ export default function TodoList() {
         .collection("tasklist")
         .get()
         .then((taskLists) => {
-          console.log(
-            "----- Loaded Data from todolist.js inside of state -------"
-          );
+          console.log("----- Loaded Data from todolist.js inside of state -------");
           console.log(taskLists);
           console.log("----- Loaded Data from todolist.js -------");
           dispatch(getData(taskLists));
@@ -51,7 +49,7 @@ export default function TodoList() {
 
     // this is to load last edited task list when opening app
     let localActiveId = localStorage.getItem("activeList");
-    if (localActiveId !== undefined && actID === undefined || actID === "") {
+    if (localActiveId !== undefined && actID === undefined && actID === "") {
       dispatch(setActiveId(localActiveId));
     }
   }, []);
