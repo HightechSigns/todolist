@@ -42,7 +42,11 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     let obj = {
       id: uuidv4(),
       name: listNameVal,
-      tasks: [],
+      tasks: [{
+        id: uuidv4(),
+        text: "First Task",
+        comp: false
+    }],
     };
     // db.collection('tasklist').add(obj)
     //-----------------------------
@@ -144,7 +148,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
         {loaded && data.length >= 1 ? data.map((d, i) => (
           <div
             key={i}
-            data-tagID={d.id}
+            data-tagid={d.id}
             className="list-name"
             onClick={(e) => handleActiveList(d.id)}
             onMouseOver={(e) => setHover(true)}
