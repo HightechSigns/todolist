@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 //import the actions
 import { getData, setActiveId } from "../../actions";
 
-export default function ListsSideBar({ db, loaded }) {
+export default function ListsSideBar({ loaded, setLoaded }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
   // need to get the value for the new list name
@@ -25,14 +25,16 @@ export default function ListsSideBar({ db, loaded }) {
   };
   // handle the delete of the list
   const handleDeleteList = (id) => {
+    console.log("Deleting this id");
     console.log(id);
+    console.log("Deleting this id");
     // delete from DB
-    db.collection("tasklist").doc({ id: id }).delete();
+    // db.collection("tasklist").doc({ id: id }).delete();
     // delete from current state
-    var lists = data.filter((x) => {
-      return x.id !== id;
-    });
-    dispatch(getData(lists));
+    // var lists = data.filter((x) => {
+    //   return x.id !== id;
+    // });
+    // dispatch(getData(lists));
   };
   // handle the creating a name
   const handleSubmit = (e) => {
@@ -44,23 +46,33 @@ export default function ListsSideBar({ db, loaded }) {
     };
     // db.collection('tasklist').add(obj)
     //-----------------------------
-    db.collection("tasklist")
-      .add(obj)
-      .then((response) => {
-        console.log("-------- Posted new List Name! --------");
-        console.log(response);
-        console.log("-------- Posted new List Name! --------");
-      })
-      .catch((error) => {
-        console.log("There was an error Posting The New List");
-      });
+    // db.collection("tasklist")
+    //   .add(obj)
+    //   .then((response) => {
+    //     console.log("-------- Posted new List Name! --------");
+    //     console.log(response);
+    //     console.log("-------- Posted new List Name! --------");
+    //   })
+    //   .catch((error) => {
+    //     console.log("There was an error Posting The New List");
+    //   });
     //-----------------------------
-    //set the current data to have the new List
-    data[0].push(obj); // dont know if this will work
+    dispatch(getData(obj))
+    // setting the new active id when submit new list name
+    // dispatch(setActiveId(''));
+    console.log("cleared the act id from submit")
+    dispatch(setActiveId(obj.id));
+    console.log("created new act id from submit")
+    // ------------
+    console.log("---- Set active Id from Submit and set Loaded")
+    console.log(obj.id)
+    console.log("---- Set active Id from Submit and set Loaded")
+    setLoaded(true)
+    // console.log(data)
     //-----------------------------
     //-----------------------------
     // this sets the active id to the new list that was just created
-    localStorage.setItem("activeList", obj.id);
+    // localStorage.setItem("activeList", obj.id);
     setAdd(false);
     // window.location.reload(false);
   };
@@ -76,16 +88,13 @@ export default function ListsSideBar({ db, loaded }) {
   };
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
-    if(id !== undefined){
-      localStorage.setItem("activeList", id);
-      console.log("------ newest active ID -----")
-      dispatch(setActiveId(id));
-      console.log(id)
-      console.log("------ newest active ID -----")
-    } else{
-      console.log("no id to make active")
+    if (id != actID) {
+      dispatch(setActiveId(""))
+      dispatch(setActiveId(id))
+    } else {
+      console.log("List ID is alreaddy active")
     }
-    
+
   };
 
   // modal for adding new list
@@ -104,6 +113,10 @@ export default function ListsSideBar({ db, loaded }) {
       </div>
     );
   };
+
+  useEffect(() => {
+    console.log("active Id has changed and component has reloaded")
+  }, [actID])
 
   return (
     <div
@@ -128,37 +141,29 @@ export default function ListsSideBar({ db, loaded }) {
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {data && loaded? data[0].map((d, i) => (
-              <div
-                key={i}
-                className="list-name"
-                onClick={(e) => handleActiveList(d.id)}
-                onMouseOver={(e) => setHover(true)}
-                onMouseLeave={(e) => setHover(false)}
-                style={
-                  actID === d.id && toggle
-                    ? { borderRight: "2px inset #20FC8F" }
-                    : actID === d.id && !toggle
-                    ? {
-                        borderRight: "3px inset #2e4756",
-                        paddingRight: "10px",
-                      }
-                    : { border: "none" }
-                }
-              >
-                <p>{d.name}</p>
-                {hover ? (
-                  <img
-                    src={trashLight}
-                    alt="#"
-                    onClick={(e) => handleDeleteList(d.id)}
-                    style={{ cursor: "pointer", width: "15px" }}
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-            ))
+        {loaded && data.length >= 1 ? data.map((d, i) => (
+          <div
+            key={i}
+            data-tagID={d.id}
+            className="list-name"
+            onClick={(e) => handleActiveList(d.id)}
+            onMouseOver={(e) => setHover(true)}
+            onMouseLeave={(e) => setHover(false)}
+          >
+            {loaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
+            <p>{d.name}</p>
+            {hover ? (
+              <img
+                src={trashLight}
+                alt="#"
+                onClick={(e) => handleDeleteList(d.id)}
+                style={{ cursor: "pointer", width: "15px" }}
+              />
+            ) : (
+              ""
+            )}
+          </div>
+        ))
           : ""}
         {/* ---------------------------------------- */}
       </div>

@@ -6,9 +6,9 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 
 
-export default function TasksSide({ db }) {
+export default function TasksSide({loaded}) {
     const [taskSuccessID, setTaskSuccessID] = useState('');
-    const [loadedTasks, setLoadedTasks] = useState(['nothing']);
+    const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
     //redux
     const actID = useSelector(state => state.actID);
@@ -17,6 +17,7 @@ export default function TasksSide({ db }) {
     const dispatch = useDispatch();
     //-----
 
+    // if no items are loaded then this message will show
     const IfNoItems = () => {
         return (
             <div className="no-items-info-cont">
@@ -24,12 +25,13 @@ export default function TasksSide({ db }) {
             </div>
         )
     }
+
     //get the data from the activeID
     const getTasks = () => {
-        if (data[0].length === 0) {
+        if (data.length <= 0) {
             console.log("There are no tasks in this list")
         } else{
-            data[0].filter(x => {
+            data.filter(x => {
                 let arr = x.id === actID;
                 setLoadedTasks(arr);
                 console.log("Loaded tasks into state")
@@ -42,25 +44,29 @@ export default function TasksSide({ db }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         let newArray = [];
-        console.log('posted')
+        if (loadedTasks.length > 0){
+            newArray.push(loadedTasks)
+        }
+        // console.log("")
         if (e && actID) {
+            // create the new task obj
             let taskObj = {
                 id: uuidv4(),
                 text: taskInput,
                 comp: false
             }
+            // push the obj into the newArray
             newArray.push(taskObj)
-            db.collection('tasklist').doc({ id: actID }).update({
-                tasks: newArray
-            })
+            // db.collection('tasklist').doc({ id: actID }).update({
+            //     tasks: newArray
+            // })
             setLoadedTasks(newArray)
-            setTaskInput('')
+            setTaskInput('') // resets input
+            console.log(data)
         } else {
             console.log('no active list')
         }
-    }
-
-    //need a component to load data and show it.  
+    } 
 
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
@@ -81,19 +87,19 @@ export default function TasksSide({ db }) {
             </form>
         </div>
     )
-    //Use effect
+    // Use effect
     useEffect(() => {
         getTasks();
-    },[loadedTasks])
+    },[loaded, actID])
 
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            {loadedTasks.length === 0 ? IfNoItems() : ''}
-            {loadedTasks.length !== 0 ?
+            {!loaded ? IfNoItems() : ''}
+            {loaded ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
-                    {loadedTasks && loadedTasks.length <= 1 ? loadedTasks.map((t, i) => (
+                    {loadedTasks.length >= 1? loadedTasks.map((t, i) => (
                         <div key={i} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
@@ -108,11 +114,11 @@ export default function TasksSide({ db }) {
                                 style={{ cursor: "pointer", width: "15px" }}
                             />
                         </div>
-                    )) : ''}
+                    )):''}
                     {/* mapped tasks */}
                 </div>
                 : ''}
-            {loadedTasks.length !== 0 ? addTask() : ''}
+            {loaded? addTask() : ''}
         </div>
     )
 }
