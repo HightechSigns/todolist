@@ -132,8 +132,8 @@ export default function TasksSide({ loaded, listDelete }) {
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            {!loaded || !actID ? IfNoItems() : ''}
-            {loaded ?
+            {!loaded || !actID || data.length === 0 ? IfNoItems() : ''}
+            {loaded && data.length !== 0 ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
                     {/* {loadedTasks.length >= 1 ? loadedTasks.map((t, i) => (
@@ -178,7 +178,7 @@ export default function TasksSide({ loaded, listDelete }) {
                     {/* mapped tasks */}
                 </div>
                 : ''}
-            {loaded ? addTask() : ''}
+            {loaded && data.length !== 0 ? addTask() : ''}
         </div>
     )
 }
