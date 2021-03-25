@@ -12,10 +12,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
   setListDelete }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
-  // const [listDelete, setListDelete] = useState(false);
-  // need to get the value for the new list name
   const [listNameVal, setListNameVal] = useState("");
-
   const actID = useSelector((state) => state.actID);
   const toggle = useSelector((state) => state.toggle);
   const data = useSelector((state) => state.data);
@@ -30,13 +27,6 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
     console.log("Deleting this List ID");
     console.log(id);
     console.log("Deleting this List ID");
-    // delete from DB
-    // db.collection("tasklist").doc({ id: id }).delete();
-    // delete from current state
-    // var lists = data.filter((x) => {
-    //   return x.id !== id;
-    // });
-    // dispatch(getData(lists));
     if (e) {
       setListDelete(true)
       data.map((d, i) => {
@@ -55,40 +45,17 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
       name: listNameVal,
       tasks: [],
     };
-    // db.collection('tasklist').add(obj)
-    //-----------------------------
-    // db.collection("tasklist")
-    //   .add(obj)
-    //   .then((response) => {
-    //     console.log("-------- Posted new List Name! --------");
-    //     console.log(response);
-    //     console.log("-------- Posted new List Name! --------");
-    //   })
-    //   .catch((error) => {
-    //     console.log("There was an error Posting The New List");
-    //   });
     //-----------------------------
     dispatch(getData(obj))
-    // setting the new active id when submit new list name
-    // dispatch(setActiveId(''));
-    console.log("cleared the act id from submit")
+    // console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
-
     // ------------
-    console.log("---- Set active Id from Submit and set Loaded")
-    console.log(obj.id)
-    console.log("---- Set active Id from Submit and set Loaded")
+    // console.log("---- Set active Id from Submit and set Loaded")
+    // console.log(obj.id)
+    // console.log("---- Set active Id from Submit and set Loaded")
     setLoaded(true)
-    // console.log(data)
-    //-----------------------------
-    //-----------------------------
-    // this sets the active id to the new list that was just created
-    // localStorage.setItem("activeList", obj.id);
     setAdd(false);
-    // window.location.reload(false);
   };
-
-
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
     if (e && !add) {
@@ -105,9 +72,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
     } else {
       console.log("List ID is alreaddy active")
     }
-
   };
-
   // modal for adding new list
   const AddListModal = () => {
     return (
@@ -124,12 +89,10 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
       </div>
     );
   };
-
   useEffect(() => {
     console.log("active Id has changed and component has reloaded")
     setListDelete(false)
   }, [actID, listDelete])
-
   return (
     <div
       className="sidebar-lists"

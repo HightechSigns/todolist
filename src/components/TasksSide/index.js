@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export default function TasksSide({ loaded, listDelete }) {
-    // const [taskSuccessID, setTaskSuccessID] = useState([]);
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskSuccess, setTaskSuccess] = useState(false);
     const [taskDelete, setTaskDelete] = useState(false);
@@ -18,7 +17,6 @@ export default function TasksSide({ loaded, listDelete }) {
     const data = useSelector(state => state.data);
     const dispatch = useDispatch();
     //-----
-
     // if no items are loaded then this message will show
     const IfNoItems = () => {
         return (
@@ -27,20 +25,8 @@ export default function TasksSide({ loaded, listDelete }) {
             </div>
         )
     }
-
     //get the data from the activeID
     const getTasks = () => {
-        //what this function should do
-        // 1 this function should only happen if the user is getting back online.
-        // 2 it should pull from the DB to get the tasks and then load them to the state.
-        //     data.filter(x => {
-        //         let listObj;
-        //         x.id === actID ? listObj = x : console.log('didnt find the object');
-        //         if (listObj.tasks.length > 0) {
-        //             setLoadedTasks([])
-
-        //             let objTaskLists = listObj.tasks
-        //             setLoadedTasks(loadedTasks.concat(objTaskLists));
         console.log("not connected to DB yet")
     }
     // handle the new task upload  
@@ -55,8 +41,6 @@ export default function TasksSide({ loaded, listDelete }) {
             text: taskInput,
             comp: false
         }
-        // add it to the loadedTasks state
-        // setLoadedTasks(old => [...old, taskObj])
         data.map((d, i) => {
             if (d.id === actID) {
                 let taskList = d.tasks;
@@ -66,12 +50,9 @@ export default function TasksSide({ loaded, listDelete }) {
         // clear the input
         setTaskInput('')
     }
-
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
         if (e) {
-            // setTaskSuccessID(old => [...old, id])
-            // set the success to true in the object and then in the render it will pull that boolean for completed
             setTaskSuccess(true)
             data.map((d, i) => {
                 if (d.id === actID) {
@@ -90,7 +71,6 @@ export default function TasksSide({ loaded, listDelete }) {
     const handleChange = (e) => {
         setTaskInput(e.target.value)
     }
-
     // add task component
     const addTask = () => (
         <div className="task-input-cont">
@@ -121,14 +101,6 @@ export default function TasksSide({ loaded, listDelete }) {
         setLoadedTasks([])
         setTaskDelete(false)
     }, [loaded, actID, taskSuccess, taskDelete,listDelete])
-    // clear the task state when the user creates or changes the list
-    // useEffect(() => {
-
-    // }, [actID])
-    // useEffect(() => {
-
-    // }, [taskSuccess])
-
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
@@ -136,23 +108,6 @@ export default function TasksSide({ loaded, listDelete }) {
             {loaded && data.length !== 0 ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
-                    {/* {loadedTasks.length >= 1 ? loadedTasks.map((t, i) => (
-                        <div key={i} data-taskid={t.id} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
-                                    {taskSuccessID && taskSuccessID === t.id ? <img src={checkLight} alt="" /> : ''}
-                                </div>
-                                <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={taskSuccessID && taskSuccessID === t.id ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
-                            </div>
-                            <img
-                                src={trashLight}
-                                alt="#"
-                                onClick={(e) => handleDeleteTask(e, t.id)}
-                                style={{ cursor: "pointer", width: "15px" }}
-                            />
-                        </div>
-                        t.comp?{ cursor: "pointer", width: "15px" }:{ cursor: "default", width: "15px" }
-                    )) : ''} */}
                     {data.length >= 1 ? data.map((d, i) => {
                         if (d.id === actID) {
                             // console.log(d)

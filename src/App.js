@@ -4,9 +4,6 @@ import {
   Route
 } from "react-router-dom";
 import TodoList from "./pages/TodoList";
-
-
-
 function App() {
   return (
     <Router>
@@ -18,5 +15,4 @@ function App() {
     </Router>
   );
 }
-
 export default App;
