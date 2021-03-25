@@ -1,28 +1,51 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
 import trashLight from "../../assets/images/trashLight.svg";
+import { useDispatch, useSelector } from "react-redux";
+//import the actions
+import { getData, setActiveId } from "../../actions";
 
-
-
-export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskData }) {
+export default function ListsSideBar({ loaded, setLoaded, listDelete,
+  setListDelete }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
+  // const [listDelete, setListDelete] = useState(false);
   // need to get the value for the new list name
   const [listNameVal, setListNameVal] = useState("");
 
+  const actID = useSelector((state) => state.actID);
+  const toggle = useSelector((state) => state.toggle);
+  const data = useSelector((state) => state.data);
+  const dispatch = useDispatch();
 
   // handle input change for list name
   const handleChange = (e) => {
     setListNameVal(e.target.value);
   };
   // handle the delete of the list
-  const handleDeleteList = (id) => {
+  const handleDeleteList = (e, id) => {
+    console.log("Deleting this List ID");
     console.log(id);
-    db.collection('tasklist').doc({ id: id }).delete()
-    window.location.reload(false);
+    console.log("Deleting this List ID");
+    // delete from DB
+    // db.collection("tasklist").doc({ id: id }).delete();
+    // delete from current state
+    // var lists = data.filter((x) => {
+    //   return x.id !== id;
+    // });
+    // dispatch(getData(lists));
+    if (e) {
+      setListDelete(true)
+      data.map((d, i) => {
+        if (d.id === id) {
+          data.splice(i, 1)
+          console.log('deleted List: ' + id)
+        }
+      })
+    }
   };
   // handle the creating a name
   const handleSubmit = (e) => {
@@ -30,14 +53,42 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
     let obj = {
       id: uuidv4(),
       name: listNameVal,
-      tasks: []
-    }
-    db.collection('tasklist').add(obj)
-    // setActiveId(obj.id)
-    localStorage.setItem("activeList", obj.id)
+      tasks: [],
+    };
+    // db.collection('tasklist').add(obj)
+    //-----------------------------
+    // db.collection("tasklist")
+    //   .add(obj)
+    //   .then((response) => {
+    //     console.log("-------- Posted new List Name! --------");
+    //     console.log(response);
+    //     console.log("-------- Posted new List Name! --------");
+    //   })
+    //   .catch((error) => {
+    //     console.log("There was an error Posting The New List");
+    //   });
+    //-----------------------------
+    dispatch(getData(obj))
+    // setting the new active id when submit new list name
+    // dispatch(setActiveId(''));
+    console.log("cleared the act id from submit")
+    dispatch(setActiveId(obj.id));
+
+    // ------------
+    console.log("---- Set active Id from Submit and set Loaded")
+    console.log(obj.id)
+    console.log("---- Set active Id from Submit and set Loaded")
+    setLoaded(true)
+    // console.log(data)
+    //-----------------------------
+    //-----------------------------
+    // this sets the active id to the new list that was just created
+    // localStorage.setItem("activeList", obj.id);
     setAdd(false);
-    window.location.reload(false);
+    // window.location.reload(false);
   };
+
+
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
     if (e && !add) {
@@ -48,8 +99,13 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
   };
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
-    localStorage.setItem("activeList", id)
-    setActiveId(id);
+    if (id !== actID) {
+      dispatch(setActiveId(""))
+      dispatch(setActiveId(id))
+    } else {
+      console.log("List ID is alreaddy active")
+    }
+
   };
 
   // modal for adding new list
@@ -69,11 +125,10 @@ export default function ListsSideBar({ toggle, activeId, setActiveId, db, taskDa
     );
   };
 
-useEffect(() => {
-  let activeId= localStorage.getItem("activeList")
-  setActiveId(activeId)
-}, [taskData])
-
+  useEffect(() => {
+    console.log("active Id has changed and component has reloaded")
+    setListDelete(false)
+  }, [actID, listDelete])
 
   return (
     <div
@@ -98,37 +153,30 @@ useEffect(() => {
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {taskData ? taskData.map((d, i) => (
+        {loaded && data.length >= 1 ? data.map((d, i) => (
           <div
             key={i}
+            data-tagid={d.id}
             className="list-name"
             onClick={(e) => handleActiveList(d.id)}
             onMouseOver={(e) => setHover(true)}
             onMouseLeave={(e) => setHover(false)}
-            style={
-              activeId === d.id && toggle
-                ? { borderRight: "2px inset #20FC8F" }
-                : activeId === d.id && !toggle
-                  ? {
-                    borderRight: "3px inset #2e4756",
-                    paddingRight: "10px",
-                  }
-                  : { border: "none" }
-            }
           >
+            {loaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
             <p>{d.name}</p>
             {hover ? (
               <img
                 src={trashLight}
                 alt="#"
-                onClick={(e) => handleDeleteList(d.id)}
+                onClick={(e) => handleDeleteList(e, d.id)}
                 style={{ cursor: "pointer", width: "15px" }}
               />
             ) : (
               ""
             )}
           </div>
-        )) : ""}
+        ))
+          : ""}
         {/* ---------------------------------------- */}
       </div>
     </div>
