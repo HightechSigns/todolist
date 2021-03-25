@@ -88,7 +88,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
   };
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
-    if (id != actID) {
+    if (id !== actID) {
       dispatch(setActiveId(""))
       dispatch(setActiveId(id))
     } else {

@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export default function TasksSide({ loaded }) {
-    const [taskSuccessID, setTaskSuccessID] = useState([]);
+    // const [taskSuccessID, setTaskSuccessID] = useState([]);
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
     //redux
@@ -55,7 +55,7 @@ export default function TasksSide({ loaded }) {
         }
         // add it to the loadedTasks state
         // setLoadedTasks(old => [...old, taskObj])
-        data.map(d=>{
+        data.map((d,i)=>{
             if(d.id === actID){
                 let taskList = d.tasks;
                 taskList.push(taskObj)
@@ -68,7 +68,19 @@ export default function TasksSide({ loaded }) {
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
         if (e) {
-            setTaskSuccessID(old => [...old, id])
+            // setTaskSuccessID(old => [...old, id])
+            // set the success to true in the object and then in the render it will pull that boolean for completed
+            data.map((d,i)=>{
+                if(d.id === actID){
+                    d.tasks.map((t,i)=>{
+                        if(t.id === id){
+                            console.log('setting task to complete!')
+                            console.log(t)
+                            return t.comp = true
+                        }
+                    })
+                }
+            })
         }
     }
     //handle the input for task
@@ -120,18 +132,19 @@ export default function TasksSide({ loaded }) {
                                 style={{ cursor: "pointer", width: "15px" }}
                             />
                         </div>
+                        t.comp?{ cursor: "pointer", width: "15px" }:{ cursor: "default", width: "15px" }
                     )) : ''} */}
-                    {data.length >= 1 ? data.map((d) => {
+                    {data.length >= 1 ? data.map((d,i) => {
                         if (d.id === actID) {
                             // console.log(d)
                             let objTasks = d.tasks;
                             return objTasks.map((t, i) => (
                                 <div key={i} data-taskid={t.id} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
-                                            {taskSuccessID && taskSuccessID === t.id ? <img src={checkLight} alt="" /> : ''}
+                                        <div className="custom-checkbox" onClick={ e => {!t.comp? handleTaskSuccess(e, t.id):console.log('Task Has already been completed!')}} style={t.comp ? { background: "#009FB7",cursor: "default" } : { background: '#495a64',cursor: "pointer" }}>
+                                            {t.comp ? <img src={checkLight} alt="" /> : ''}
                                         </div>
-                                        <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={taskSuccessID && taskSuccessID === t.id ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
+                                        <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
                                     </div>
                                     <img
                                         src={trashLight}
