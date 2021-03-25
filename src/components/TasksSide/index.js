@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 
 export default function TasksSide({ loaded }) {
-    const [taskSuccessID, setTaskSuccessID] = useState('');
+    const [taskSuccessID, setTaskSuccessID] = useState([]);
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskInput, setTaskInput] = useState('');
     //redux
@@ -28,17 +28,21 @@ export default function TasksSide({ loaded }) {
 
     //get the data from the activeID
     const getTasks = () => {
-        if (loaded && actID && loadedTasks.length <= 0) {
+        if (loaded && actID) {
+            // console.log(data)
             data.filter(x => {
-                let arr = x.id === actID;
-                setLoadedTasks(old => [...old, arr]);
-                console.log("Loaded tasks into state")
-                console.log(loadedTasks)
-                console.log("Loaded tasks into state")
+                let listObj;
+                // console.log(actID)
+                // console.log(x.id === actID)
+                x.id === actID? listObj = x:console.log('didnt find the object');
+                let objTaskLists = listObj.tasks
+                setLoadedTasks(loadedTasks.concat(objTaskLists));
+                // console.log("Loaded tasks into state")
+                // console.log(loadedTasks)
+                // console.log("Loaded tasks into state")
             })
         } else {
             console.log("There are no tasks in this list")
-
         }
     }
     // handle the new task upload  
@@ -61,7 +65,7 @@ export default function TasksSide({ loaded }) {
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
         if (e) {
-            setTaskSuccessID(id)
+            setTaskSuccessID(old => [...old, id])
         }
     }
     //handle the input for task
@@ -77,6 +81,11 @@ export default function TasksSide({ loaded }) {
             </form>
         </div>
     )
+    const handleDeleteTask = (e, id) => {
+        if (e) {
+            console.log('task ID: ' + id)
+        }
+    }
     // Use effect
     useEffect(() => {
         getTasks();
@@ -85,7 +94,7 @@ export default function TasksSide({ loaded }) {
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            {!loaded ? IfNoItems() : ''}
+            {!loaded || !actID ? IfNoItems() : ''}
             {loaded ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
@@ -100,7 +109,7 @@ export default function TasksSide({ loaded }) {
                             <img
                                 src={trashLight}
                                 alt="#"
-                                // onClick={(e) => handleDeleteList(d.id)}
+                                onClick={(e) => handleDeleteTask(e, t.id)}
                                 style={{ cursor: "pointer", width: "15px" }}
                             />
                         </div>

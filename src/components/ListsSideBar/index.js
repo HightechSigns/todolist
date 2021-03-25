@@ -24,10 +24,10 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     setListNameVal(e.target.value);
   };
   // handle the delete of the list
-  const handleDeleteList = (id) => {
-    console.log("Deleting this id");
+  const handleDeleteList = (e, id) => {
+    console.log("Deleting this List ID");
     console.log(id);
-    console.log("Deleting this id");
+    console.log("Deleting this List ID");
     // delete from DB
     // db.collection("tasklist").doc({ id: id }).delete();
     // delete from current state
@@ -160,7 +160,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
               <img
                 src={trashLight}
                 alt="#"
-                onClick={(e) => handleDeleteList(d.id)}
+                onClick={(e) => handleDeleteList(e,d.id)}
                 style={{ cursor: "pointer", width: "15px" }}
               />
             ) : (

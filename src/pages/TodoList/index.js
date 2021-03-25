@@ -64,7 +64,7 @@ export default function TodoList() {
       style={toggle ? modeStyles.darkMode : modeStyles.lightMode}
     >
       <div className="header-main-cont">
-        <OnOffLineUser />
+        <OnOffLineUser toggle={toggle}/>
         <ModeSelector />
       </div>
       <section className="main-body-cont">
