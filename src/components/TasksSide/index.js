@@ -28,22 +28,18 @@ export default function TasksSide({ loaded }) {
 
     //get the data from the activeID
     const getTasks = () => {
-        if (loaded && actID) {
-            // console.log(data)
-            data.filter(x => {
-                let listObj;
-                // console.log(actID)
-                // console.log(x.id === actID)
-                x.id === actID? listObj = x:console.log('didnt find the object');
-                let objTaskLists = listObj.tasks
-                setLoadedTasks(loadedTasks.concat(objTaskLists));
-                // console.log("Loaded tasks into state")
-                // console.log(loadedTasks)
-                // console.log("Loaded tasks into state")
-            })
-        } else {
-            console.log("There are no tasks in this list")
-        }
+        //what this function should do
+        // 1 this function should only happen if the user is getting back online.
+        // 2 it should pull from the DB to get the tasks and then load them to the state.
+        //     data.filter(x => {
+        //         let listObj;
+        //         x.id === actID ? listObj = x : console.log('didnt find the object');
+        //         if (listObj.tasks.length > 0) {
+        //             setLoadedTasks([])
+
+        //             let objTaskLists = listObj.tasks
+        //             setLoadedTasks(loadedTasks.concat(objTaskLists));
+        console.log("not connected to DB yet")
     }
     // handle the new task upload  
     const handleSubmit = (e) => {
@@ -57,7 +53,14 @@ export default function TasksSide({ loaded }) {
             text: taskInput,
             comp: false
         }
-        setLoadedTasks(old => [...old, taskObj])
+        // add it to the loadedTasks state
+        // setLoadedTasks(old => [...old, taskObj])
+        data.map(d=>{
+            if(d.id === actID){
+                let taskList = d.tasks;
+                taskList.push(taskObj)
+            }
+        })
         // clear the input
         setTaskInput('')
     }
@@ -89,7 +92,11 @@ export default function TasksSide({ loaded }) {
     // Use effect
     useEffect(() => {
         getTasks();
-    }, [loaded, actID])
+    }, [loaded])
+    // clear the task state when the user creates or changes the list
+    useEffect(() => {
+        setLoadedTasks([])
+    }, [actID])
 
     return (
         <div className="task-section">
@@ -98,7 +105,7 @@ export default function TasksSide({ loaded }) {
             {loaded ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
-                    {loadedTasks.length >= 1 ? loadedTasks.map((t, i) => (
+                    {/* {loadedTasks.length >= 1 ? loadedTasks.map((t, i) => (
                         <div key={i} data-taskid={t.id} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
@@ -113,7 +120,29 @@ export default function TasksSide({ loaded }) {
                                 style={{ cursor: "pointer", width: "15px" }}
                             />
                         </div>
-                    )) : ''}
+                    )) : ''} */}
+                    {data.length >= 1 ? data.map((d) => {
+                        if (d.id === actID) {
+                            // console.log(d)
+                            let objTasks = d.tasks;
+                            return objTasks.map((t, i) => (
+                                <div key={i} data-taskid={t.id} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <div className="custom-checkbox" onClick={e => handleTaskSuccess(e, t.id)} style={taskSuccessID && taskSuccessID === t.id ? { background: "#009FB7" } : { background: '#495a64' }}>
+                                            {taskSuccessID && taskSuccessID === t.id ? <img src={checkLight} alt="" /> : ''}
+                                        </div>
+                                        <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={taskSuccessID && taskSuccessID === t.id ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
+                                    </div>
+                                    <img
+                                        src={trashLight}
+                                        alt="#"
+                                        onClick={(e) => handleDeleteTask(e, t.id)}
+                                        style={{ cursor: "pointer", width: "15px" }}
+                                    />
+                                </div>
+                            ))
+                        }
+                    }) : ''}
                     {/* mapped tasks */}
                 </div>
                 : ''}

@@ -42,11 +42,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     let obj = {
       id: uuidv4(),
       name: listNameVal,
-      tasks: [{
-        id: uuidv4(),
-        text: "First Task",
-        comp: false
-    }],
+      tasks: [],
     };
     // db.collection('tasklist').add(obj)
     //-----------------------------
@@ -66,7 +62,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     // dispatch(setActiveId(''));
     console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
-    console.log("created new act id from submit")
+    
     // ------------
     console.log("---- Set active Id from Submit and set Loaded")
     console.log(obj.id)
