@@ -9,6 +9,8 @@ import { useDispatch, useSelector } from "react-redux";
 export default function TasksSide({ loaded }) {
     // const [taskSuccessID, setTaskSuccessID] = useState([]);
     const [loadedTasks, setLoadedTasks] = useState([]);
+    const [taskSuccess, setTaskSuccess] = useState(false);
+    const [taskDelete, setTaskDelete] = useState(false);
     const [taskInput, setTaskInput] = useState('');
     //redux
     const actID = useSelector(state => state.actID);
@@ -55,8 +57,8 @@ export default function TasksSide({ loaded }) {
         }
         // add it to the loadedTasks state
         // setLoadedTasks(old => [...old, taskObj])
-        data.map((d,i)=>{
-            if(d.id === actID){
+        data.map((d, i) => {
+            if (d.id === actID) {
                 let taskList = d.tasks;
                 taskList.push(taskObj)
             }
@@ -70,10 +72,11 @@ export default function TasksSide({ loaded }) {
         if (e) {
             // setTaskSuccessID(old => [...old, id])
             // set the success to true in the object and then in the render it will pull that boolean for completed
-            data.map((d,i)=>{
-                if(d.id === actID){
-                    d.tasks.map((t,i)=>{
-                        if(t.id === id){
+            setTaskSuccess(true)
+            data.map((d, i) => {
+                if (d.id === actID) {
+                    d.tasks.map((t, i) => {
+                        if (t.id === id) {
                             console.log('setting task to complete!')
                             console.log(t)
                             return t.comp = true
@@ -98,17 +101,33 @@ export default function TasksSide({ loaded }) {
     )
     const handleDeleteTask = (e, id) => {
         if (e) {
-            console.log('task ID: ' + id)
+            setTaskDelete(true)
+            data.map((d, i) => {
+                if (d.id === actID) {
+                    d.tasks.map((t, i) => {
+                        if (t.id === id) {
+                            d.tasks.splice(i, 1)
+                            console.log('deleted Task: ' + id)
+                        }
+                    })
+                }
+            })
         }
     }
     // Use effect
     useEffect(() => {
         getTasks();
-    }, [loaded])
-    // clear the task state when the user creates or changes the list
-    useEffect(() => {
+        setTaskSuccess(false)
         setLoadedTasks([])
-    }, [actID])
+        setTaskDelete(false)
+    }, [loaded, actID, taskSuccess, taskDelete])
+    // clear the task state when the user creates or changes the list
+    // useEffect(() => {
+
+    // }, [actID])
+    // useEffect(() => {
+
+    // }, [taskSuccess])
 
     return (
         <div className="task-section">
@@ -134,14 +153,14 @@ export default function TasksSide({ loaded }) {
                         </div>
                         t.comp?{ cursor: "pointer", width: "15px" }:{ cursor: "default", width: "15px" }
                     )) : ''} */}
-                    {data.length >= 1 ? data.map((d,i) => {
+                    {data.length >= 1 ? data.map((d, i) => {
                         if (d.id === actID) {
                             // console.log(d)
                             let objTasks = d.tasks;
                             return objTasks.map((t, i) => (
                                 <div key={i} data-taskid={t.id} className="task-cont" style={toggle ? { background: '#2E4756' } : { background: '#495a64' }}>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                                        <div className="custom-checkbox" onClick={ e => {!t.comp? handleTaskSuccess(e, t.id):console.log('Task Has already been completed!')}} style={t.comp ? { background: "#009FB7",cursor: "default" } : { background: '#495a64',cursor: "pointer" }}>
+                                        <div className="custom-checkbox" onClick={e => { !t.comp ? handleTaskSuccess(e, t.id) : console.log('Task Has already been completed!') }} style={t.comp ? { background: "#009FB7", cursor: "default" } : !toggle ? { background: 'lightgray', cursor: "pointer" } : { background: '#495a64', cursor: "pointer" }}>
                                             {t.comp ? <img src={checkLight} alt="" /> : ''}
                                         </div>
                                         <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
