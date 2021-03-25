@@ -15,6 +15,7 @@ import { setActiveId } from "../../actions";
 
 export default function TodoList() {
   const [loaded, setLoaded] = useState(false);
+  const [listDelete, setListDelete] = useState(false);
   const toggle = useSelector((state) => state.toggle);
   const actID = useSelector((state) => state.actID);
   const data = useSelector((state) => state.data);
@@ -33,7 +34,7 @@ export default function TodoList() {
   };
 
   //getting items from DB when page loads
-  
+
   useEffect(() => {
     async function addData() {
       // await db
@@ -64,11 +65,15 @@ export default function TodoList() {
       style={toggle ? modeStyles.darkMode : modeStyles.lightMode}
     >
       <div className="header-main-cont">
-        <OnOffLineUser toggle={toggle}/>
+        <OnOffLineUser toggle={toggle} />
         <ModeSelector />
       </div>
       <section className="main-body-cont">
-        <ListsSideBar setLoaded={setLoaded} loaded={loaded} />
+        <ListsSideBar
+          setLoaded={setLoaded}
+          loaded={loaded}
+          listDelete={listDelete}
+          setListDelete={setListDelete} />
         <TasksSide loaded={loaded} />
       </section>
     </div>

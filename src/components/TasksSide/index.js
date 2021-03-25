@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 
 
-export default function TasksSide({ loaded }) {
+export default function TasksSide({ loaded, listDelete }) {
     // const [taskSuccessID, setTaskSuccessID] = useState([]);
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskSuccess, setTaskSuccess] = useState(false);
@@ -120,7 +120,7 @@ export default function TasksSide({ loaded }) {
         setTaskSuccess(false)
         setLoadedTasks([])
         setTaskDelete(false)
-    }, [loaded, actID, taskSuccess, taskDelete])
+    }, [loaded, actID, taskSuccess, taskDelete,listDelete])
     // clear the task state when the user creates or changes the list
     // useEffect(() => {
 

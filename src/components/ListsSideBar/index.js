@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from "react-redux";
 //import the actions
 import { getData, setActiveId } from "../../actions";
 
-export default function ListsSideBar({ loaded, setLoaded }) {
+export default function ListsSideBar({ loaded, setLoaded, listDelete,
+  setListDelete }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
+  // const [listDelete, setListDelete] = useState(false);
   // need to get the value for the new list name
   const [listNameVal, setListNameVal] = useState("");
 
@@ -35,6 +37,15 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     //   return x.id !== id;
     // });
     // dispatch(getData(lists));
+    if (e) {
+      setListDelete(true)
+      data.map((d, i) => {
+        if (d.id === id) {
+          data.splice(i, 1)
+          console.log('deleted List: ' + id)
+        }
+      })
+    }
   };
   // handle the creating a name
   const handleSubmit = (e) => {
@@ -62,7 +73,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
     // dispatch(setActiveId(''));
     console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
-    
+
     // ------------
     console.log("---- Set active Id from Submit and set Loaded")
     console.log(obj.id)
@@ -116,7 +127,8 @@ export default function ListsSideBar({ loaded, setLoaded }) {
 
   useEffect(() => {
     console.log("active Id has changed and component has reloaded")
-  }, [actID])
+    setListDelete(false)
+  }, [actID, listDelete])
 
   return (
     <div
@@ -156,7 +168,7 @@ export default function ListsSideBar({ loaded, setLoaded }) {
               <img
                 src={trashLight}
                 alt="#"
-                onClick={(e) => handleDeleteList(e,d.id)}
+                onClick={(e) => handleDeleteList(e, d.id)}
                 style={{ cursor: "pointer", width: "15px" }}
               />
             ) : (
