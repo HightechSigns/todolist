@@ -47,6 +47,10 @@ export default function TasksSide({ loaded, listDelete }) {
                 taskList.push(taskObj)
             }
         })
+        if (data.length >= 1) {
+            // localStorage.setItem('task-data', JSON.stringify(data))
+            // so now if the data changes the local storage data gets updated
+          }
         // clear the input
         setTaskInput('')
     }
@@ -75,7 +79,7 @@ export default function TasksSide({ loaded, listDelete }) {
     const addTask = () => (
         <div className="task-input-cont">
             <form onSubmit={e => handleSubmit(e)}>
-                <input className="task-input" value={taskInput} onChange={e => handleChange(e)} type="text" placeholder="Enter A Task" style={toggle ? {} : { background: '#2e475633' }} />
+                <input className="task-input" spellcheck="true" value={taskInput} onChange={e => handleChange(e)} type="text" placeholder="Enter A Task" style={toggle ? {} : { background: '#2e475633' }} />
             </form>
         </div>
     )
@@ -100,7 +104,10 @@ export default function TasksSide({ loaded, listDelete }) {
         setTaskSuccess(false)
         setLoadedTasks([])
         setTaskDelete(false)
-    }, [loaded, actID, taskSuccess, taskDelete,listDelete])
+        // need to check local storage to see if anything has changed
+        // if changed then post new data to local storage
+       
+    }, [loaded, actID, taskSuccess, taskDelete, listDelete]);
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
@@ -118,7 +125,7 @@ export default function TasksSide({ loaded, listDelete }) {
                                         <div className="custom-checkbox" onClick={e => { !t.comp ? handleTaskSuccess(e, t.id) : console.log('Task Has already been completed!') }} style={t.comp ? { background: "#009FB7", cursor: "default" } : !toggle ? { background: 'lightgray', cursor: "pointer" } : { background: '#495a64', cursor: "pointer" }}>
                                             {t.comp ? <img src={checkLight} alt="" /> : ''}
                                         </div>
-                                        <p style={toggle ? { color: 'white' } : { color: 'white' }}><span style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
+                                        <p style={toggle ? { color: 'white' } : { color: 'white' }}><span className="task-span" style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
                                     </div>
                                     <img
                                         src={trashLight}

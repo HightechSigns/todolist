@@ -7,7 +7,8 @@ import ListsSideBar from "../../components/ListsSideBar";
 import ModeSelector from "../../components/ModeSelector";
 import TasksSide from "../../components/TasksSide";
 //import DB
-import { setActiveId } from "../../actions";
+import { setupData, getLocalData, setLocalActiveId, updateLocalData, deleteLocalData } from "../../Database/localStorage.js";
+import { getData, setActiveId } from "../../actions";
 export default function TodoList() {
   const [loaded, setLoaded] = useState(false);
   const [listDelete, setListDelete] = useState(false);
@@ -29,15 +30,15 @@ export default function TodoList() {
   };
   //getting items from DB when page loads
   useEffect(() => {
-    async function addData() {
-      console.log("Data has been added");
-    }
-    addData();
+
     // this is to load last edited task list when opening app
-    let localActiveId = localStorage.getItem("activeList");
-    if (localActiveId !== undefined && actID === undefined && actID === "") {
-      dispatch(setActiveId(localActiveId));
-    }
+    // if the user has a last edited task
+    // let localActiveId = localStorage.getItem("active-list-id");
+    // if (localActiveId !== undefined ) {
+    //   dispatch(setActiveId(localActiveId));
+    // }
+    setupData(data,actID)
+    getLocalData(dispatch)
   }, [data]);
   return (
     <div

@@ -45,14 +45,15 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
       name: listNameVal,
       tasks: [],
     };
+
     //-----------------------------
     dispatch(getData(obj))
     // console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
+    // set the active list id in storage
+    // localStorage.setItem('active-List-id', obj.id)
     // ------------
-    // console.log("---- Set active Id from Submit and set Loaded")
-    // console.log(obj.id)
-    // console.log("---- Set active Id from Submit and set Loaded")
+
     setLoaded(true)
     setAdd(false);
   };
@@ -69,6 +70,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
     if (id !== actID) {
       dispatch(setActiveId(""))
       dispatch(setActiveId(id))
+      // localStorage.setItem('active-List-id', id)
     } else {
       console.log("List ID is alreaddy active")
     }
@@ -80,6 +82,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
             className="add-name-input"
+            spellcheck="true"
             onChange={(e) => handleChange(e)}
             type="text"
             placeholder="List Name"
@@ -92,6 +95,12 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
   useEffect(() => {
     console.log("active Id has changed and component has reloaded")
     setListDelete(false)
+    // need to check local storage to see if anything has changed
+    // if changed then post new data to local storage
+    if (data.length >= 1) {
+      // localStorage.setItem('task-data', JSON.stringify(data))
+      // so now if the data changes the local storage data gets updated
+    }
   }, [actID, listDelete])
   return (
     <div
@@ -126,7 +135,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
             onMouseLeave={(e) => setHover(false)}
           >
             {loaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
-            <p>{d.name}</p>
+            <p style={{ textTransform: 'capitalize' }}>{d.name}</p>
             {hover ? (
               <img
                 src={trashLight}
