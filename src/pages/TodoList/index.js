@@ -7,10 +7,10 @@ import ListsSideBar from "../../components/ListsSideBar";
 import ModeSelector from "../../components/ModeSelector";
 import TasksSide from "../../components/TasksSide";
 //import DB
-import { setupData, getLocalData, setLocalActiveId, updateLocalData, deleteLocalData } from "../../Database/localStorage.js";
-import { getData, setActiveId } from "../../actions";
+import { getLocalData } from "../../Database/localStorage.js";
+// import { getData, setActiveId } from "../../actions";
 export default function TodoList() {
-  const [loaded, setLoaded] = useState(false);
+  const [localLoaded, setlocalLoaded] = useState(false);
   const [listDelete, setListDelete] = useState(false);
   const toggle = useSelector((state) => state.toggle);
   const actID = useSelector((state) => state.actID);
@@ -37,8 +37,7 @@ export default function TodoList() {
     // if (localActiveId !== undefined ) {
     //   dispatch(setActiveId(localActiveId));
     // }
-    setupData(data,actID)
-    getLocalData(dispatch)
+    getLocalData(dispatch,setlocalLoaded)
   }, [data]);
   return (
     <div
@@ -51,11 +50,10 @@ export default function TodoList() {
       </div>
       <section className="main-body-cont">
         <ListsSideBar
-          setLoaded={setLoaded}
-          loaded={loaded}
+          localLoaded={localLoaded}
           listDelete={listDelete}
           setListDelete={setListDelete} />
-        <TasksSide loaded={loaded} />
+        <TasksSide localLoaded={localLoaded} />
       </section>
     </div>
   );

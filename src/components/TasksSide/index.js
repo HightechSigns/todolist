@@ -4,9 +4,9 @@ import trashLight from "../../assets/images/trashLight.svg";
 import checkLight from "../../assets/images/checkLight.svg";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
+import { updateLocalData } from "../../Database/localStorage.js";
 
-
-export default function TasksSide({ loaded, listDelete }) {
+export default function TasksSide({ localLoaded, listDelete }) {
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskSuccess, setTaskSuccess] = useState(false);
     const [taskDelete, setTaskDelete] = useState(false);
@@ -47,10 +47,6 @@ export default function TasksSide({ loaded, listDelete }) {
                 taskList.push(taskObj)
             }
         })
-        if (data.length >= 1) {
-            // localStorage.setItem('task-data', JSON.stringify(data))
-            // so now if the data changes the local storage data gets updated
-          }
         // clear the input
         setTaskInput('')
     }
@@ -104,15 +100,16 @@ export default function TasksSide({ loaded, listDelete }) {
         setTaskSuccess(false)
         setLoadedTasks([])
         setTaskDelete(false)
+        updateLocalData(data)
         // need to check local storage to see if anything has changed
         // if changed then post new data to local storage
        
-    }, [loaded, actID, taskSuccess, taskDelete, listDelete]);
+    }, [localLoaded, actID, taskSuccess, taskDelete, listDelete]);
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            {!loaded || !actID || data.length === 0 ? IfNoItems() : ''}
-            {loaded && data.length !== 0 ?
+            {!localLoaded || !actID || data.length === 0 ? IfNoItems() : ''}
+            {localLoaded && data.length !== 0 ?
                 <div className="all-tasks-cont">
                     {/* mapped tasks */}
                     {data.length >= 1 ? data.map((d, i) => {
@@ -140,7 +137,7 @@ export default function TasksSide({ loaded, listDelete }) {
                     {/* mapped tasks */}
                 </div>
                 : ''}
-            {loaded && data.length !== 0 ? addTask() : ''}
+            {localLoaded && data.length !== 0 ? addTask() : ''}
         </div>
     )
 }

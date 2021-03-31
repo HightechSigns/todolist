@@ -7,9 +7,10 @@ import trashLight from "../../assets/images/trashLight.svg";
 import { useDispatch, useSelector } from "react-redux";
 //import the actions
 import { getData, setActiveId } from "../../actions";
+import { setLocalActiveId,updateLocalData } from "../../Database/localStorage.js";
 
-export default function ListsSideBar({ loaded, setLoaded, listDelete,
-  setListDelete }) {
+export default function ListsSideBar({ listDelete,
+  setListDelete, localLoaded }) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
   const [listNameVal, setListNameVal] = useState("");
@@ -34,7 +35,16 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
           data.splice(i, 1)
           console.log('deleted List: ' + id)
         }
+
       })
+      if (data.length >= 1) {
+        let newCurrId = data[0].id
+        setLocalActiveId(newCurrId)
+        dispatch(setActiveId(newCurrId))
+      } else {
+        console.log("No more lists")
+        setLocalActiveId("")
+      }
     }
   };
   // handle the creating a name
@@ -45,16 +55,13 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
       name: listNameVal,
       tasks: [],
     };
-
     //-----------------------------
     dispatch(getData(obj))
     // console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
-    // set the active list id in storage
-    // localStorage.setItem('active-List-id', obj.id)
-    // ------------
-
-    setLoaded(true)
+    // set the active list id in Local storage
+    setLocalActiveId(obj.id);
+    // -----------
     setAdd(false);
   };
   // handle the click for adding a name. pops up the modal
@@ -70,7 +77,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
     if (id !== actID) {
       dispatch(setActiveId(""))
       dispatch(setActiveId(id))
-      // localStorage.setItem('active-List-id', id)
+      setLocalActiveId(id)
     } else {
       console.log("List ID is alreaddy active")
     }
@@ -97,10 +104,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
     setListDelete(false)
     // need to check local storage to see if anything has changed
     // if changed then post new data to local storage
-    if (data.length >= 1) {
-      // localStorage.setItem('task-data', JSON.stringify(data))
-      // so now if the data changes the local storage data gets updated
-    }
+    updateLocalData(data)
   }, [actID, listDelete])
   return (
     <div
@@ -121,11 +125,13 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
           src={toggle ? addLight : addDark}
           alt="#"
           style={{ cursor: "pointer" }}
+          role="button"
+          aria-label="Create a new list..."
         />
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {loaded && data.length >= 1 ? data.map((d, i) => (
+        {localLoaded && data.length >= 1 ? data.map((d, i) => (
           <div
             key={i}
             data-tagid={d.id}
@@ -134,7 +140,7 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
             onMouseOver={(e) => setHover(true)}
             onMouseLeave={(e) => setHover(false)}
           >
-            {loaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
+            {localLoaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
             <p style={{ textTransform: 'capitalize' }}>{d.name}</p>
             {hover ? (
               <img
