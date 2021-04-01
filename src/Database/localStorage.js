@@ -35,7 +35,6 @@ export const updateLocalData = (stateData) => {
     if (stateData.length >= 1) {
         localStorage.setItem('task-data', JSON.stringify(stateData));
     }
-
 }
 
 // if the user wants to delete thier history 

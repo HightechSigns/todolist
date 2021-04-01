@@ -7,10 +7,17 @@ import trashLight from "../../assets/images/trashLight.svg";
 import { useDispatch, useSelector } from "react-redux";
 //import the actions
 import { getData, setActiveId } from "../../actions";
-import { setLocalActiveId,updateLocalData } from "../../Database/localStorage.js";
+import {
+  setLocalActiveId,
+  updateLocalData,
+} from "../../Database/localStorage.js";
 
-export default function ListsSideBar({ listDelete,
-  setListDelete, localLoaded }) {
+export default function ListsSideBar({
+  listDelete,
+  setListDelete,
+  localLoaded,
+  setlocalLoaded,
+}) {
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
   const [listNameVal, setListNameVal] = useState("");
@@ -29,21 +36,20 @@ export default function ListsSideBar({ listDelete,
     console.log(id);
     console.log("Deleting this List ID");
     if (e) {
-      setListDelete(true)
+      setListDelete(true);
       data.map((d, i) => {
         if (d.id === id) {
-          data.splice(i, 1)
-          console.log('deleted List: ' + id)
+          data.splice(i, 1);
+          console.log("deleted List: " + id);
         }
-
-      })
+      });
       if (data.length >= 1) {
-        let newCurrId = data[0].id
-        setLocalActiveId(newCurrId)
-        dispatch(setActiveId(newCurrId))
+        let newCurrId = data[0].id;
+        setLocalActiveId(newCurrId);
+        dispatch(setActiveId(newCurrId));
       } else {
-        console.log("No more lists")
-        setLocalActiveId("")
+        console.log("No more lists");
+        setLocalActiveId("");
       }
     }
   };
@@ -56,13 +62,14 @@ export default function ListsSideBar({ listDelete,
       tasks: [],
     };
     //-----------------------------
-    dispatch(getData(obj))
+    dispatch(getData(obj));
     // console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
     // set the active list id in Local storage
     setLocalActiveId(obj.id);
     // -----------
     setAdd(false);
+    setlocalLoaded(true)
   };
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
@@ -75,11 +82,11 @@ export default function ListsSideBar({ listDelete,
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
     if (id !== actID) {
-      dispatch(setActiveId(""))
-      dispatch(setActiveId(id))
-      setLocalActiveId(id)
+      dispatch(setActiveId(""));
+      dispatch(setActiveId(id));
+      setLocalActiveId(id);
     } else {
-      console.log("List ID is alreaddy active")
+      console.log("List ID is alreaddy active");
     }
   };
   // modal for adding new list
@@ -100,12 +107,12 @@ export default function ListsSideBar({ listDelete,
     );
   };
   useEffect(() => {
-    console.log("active Id has changed and component has reloaded")
-    setListDelete(false)
+    console.log("active Id has changed and component has reloaded");
+    setListDelete(false);
     // need to check local storage to see if anything has changed
     // if changed then post new data to local storage
-    updateLocalData(data)
-  }, [actID, listDelete])
+    updateLocalData(data);
+  }, [actID, listDelete]);
   return (
     <div
       className="sidebar-lists"
@@ -131,29 +138,41 @@ export default function ListsSideBar({ listDelete,
       </div>
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
-        {localLoaded && data.length >= 1 ? data.map((d, i) => (
-          <div
-            key={i}
-            data-tagid={d.id}
-            className="list-name"
-            onClick={(e) => handleActiveList(d.id)}
-            onMouseOver={(e) => setHover(true)}
-            onMouseLeave={(e) => setHover(false)}
-          >
-            {localLoaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
-            <p style={{ textTransform: 'capitalize' }}>{d.name}</p>
-            {hover ? (
-              <img
-                src={trashLight}
-                alt="#"
-                onClick={(e) => handleDeleteList(e, d.id)}
-                style={{ cursor: "pointer", width: "15px" }}
-              />
-            ) : (
-              ""
-            )}
-          </div>
-        ))
+        {localLoaded && data.length >= 1
+          ? data.map((d, i) => (
+              <div
+                key={i}
+                data-tagid={d.id}
+                className="list-name"
+                onClick={(e) => handleActiveList(d.id)}
+                onMouseOver={(e) => setHover(true)}
+                onMouseLeave={(e) => setHover(false)}
+              >
+                {localLoaded && actID === d.id ? (
+                  <div
+                    className="list-active-bar"
+                    style={
+                      toggle
+                        ? { background: "#20FC8F" }
+                        : { background: "#2e4756" }
+                    }
+                  ></div>
+                ) : (
+                  ""
+                )}
+                <p style={{ textTransform: "capitalize" }}>{d.name}</p>
+                {hover ? (
+                  <img
+                    src={trashLight}
+                    alt="#"
+                    onClick={(e) => handleDeleteList(e, d.id)}
+                    style={{ cursor: "pointer", width: "15px" }}
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+            ))
           : ""}
         {/* ---------------------------------------- */}
       </div>

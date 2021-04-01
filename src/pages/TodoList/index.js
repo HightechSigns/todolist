@@ -30,13 +30,6 @@ export default function TodoList() {
   };
   //getting items from DB when page loads
   useEffect(() => {
-
-    // this is to load last edited task list when opening app
-    // if the user has a last edited task
-    // let localActiveId = localStorage.getItem("active-list-id");
-    // if (localActiveId !== undefined ) {
-    //   dispatch(setActiveId(localActiveId));
-    // }
     getLocalData(dispatch,setlocalLoaded)
   }, [data]);
   return (
@@ -51,6 +44,7 @@ export default function TodoList() {
       <section className="main-body-cont">
         <ListsSideBar
           localLoaded={localLoaded}
+          setlocalLoaded={setlocalLoaded}
           listDelete={listDelete}
           setListDelete={setListDelete} />
         <TasksSide localLoaded={localLoaded} />
