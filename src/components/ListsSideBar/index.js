@@ -20,7 +20,7 @@ export default function ListsSideBar({
 }) {
   const listNameInput = useRef();
   const [add, setAdd] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [hover, setHover] = useState('');
   const [listNameVal, setListNameVal] = useState("");
   const actID = useSelector((state) => state.actID);
   const toggle = useSelector((state) => state.toggle);
@@ -163,8 +163,8 @@ export default function ListsSideBar({
                 data-tagid={d.id}
                 className="list-name"
                 onClick={(e) => handleActiveList(d.id)}
-                onMouseOver={(e) => setHover(true)}
-                onMouseLeave={(e) => setHover(false)}
+                onMouseOver={(e) => setHover(d.id)}
+                onMouseLeave={(e) => setHover('')}
               >
                 {localLoaded && actID === d.id ? (
                   <div
@@ -179,7 +179,7 @@ export default function ListsSideBar({
                   ""
                 )}
                 <p style={{ textTransform: "capitalize" }}>{d.name}</p>
-                {hover ? (
+                {hover === d.id ? (
                   <img
                     src={trashLight}
                     alt="#"
