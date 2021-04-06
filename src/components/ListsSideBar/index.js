@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
-import trashLight from "../../assets/images/trashLight.svg";
+import trashLight from "../../assets/images/trashDark.svg";
 import { useDispatch, useSelector } from "react-redux";
 //import the actions
 import { getData, setActiveId } from "../../actions";
@@ -18,6 +18,7 @@ export default function ListsSideBar({
   localLoaded,
   setlocalLoaded,
 }) {
+  const listNameInput = useRef();
   const [add, setAdd] = useState(false);
   const [hover, setHover] = useState(false);
   const [listNameVal, setListNameVal] = useState("");
@@ -69,7 +70,7 @@ export default function ListsSideBar({
     setLocalActiveId(obj.id);
     // -----------
     setAdd(false);
-    setlocalLoaded(true)
+    setlocalLoaded(true);
   };
   // handle the click for adding a name. pops up the modal
   const handleAddClick = (e) => {
@@ -79,6 +80,13 @@ export default function ListsSideBar({
       setAdd(false);
     }
   };
+  // if user clicks off the iput area for the list, close it
+  const clickOff=(e)=>{
+    if (listNameInput.current.contains(e.target)) {
+      return
+  }
+    setAdd(false)
+  }
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
     if (id !== actID) {
@@ -92,7 +100,10 @@ export default function ListsSideBar({
   // modal for adding new list
   const AddListModal = () => {
     return (
-      <div className="add-list-name-modal">
+      <div
+        className="add-list-name-modal"
+        style={toggle ? { background: "white" } : { background: "#d5dadd" }}
+      >
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
             className="add-name-input"
@@ -100,14 +111,20 @@ export default function ListsSideBar({
             onChange={(e) => handleChange(e)}
             type="text"
             placeholder="List Name"
+            autoFocus
+            
           />
         </form>
-        <div className="alnm-triangle"></div>
+        <div
+          className={toggle? "alnm-triangle a-t-tog":"alnm-triangle a-t-off"}
+        ></div>
       </div>
     );
   };
   useEffect(() => {
     console.log("active Id has changed and component has reloaded");
+    //click off the input area for adding list name
+    document.addEventListener('mousedown', clickOff);
     setListDelete(false);
     // need to check local storage to see if anything has changed
     // if changed then post new data to local storage
@@ -128,6 +145,7 @@ export default function ListsSideBar({
           Lists
         </p>
         <img
+        ref={listNameInput}
           onClick={(e) => handleAddClick(e)}
           src={toggle ? addLight : addDark}
           alt="#"

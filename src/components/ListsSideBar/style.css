@@ -17,19 +17,25 @@
     padding: 10px;
     max-width: 260px;
     width: 100%;
-    background: #2e4756;
     top: -80px;
     z-index: 100;
     border-radius: 5px;
-    box-shadow: 0 6px 13px rgba(0, 0, 0, 0.356);
+   
 }
 
-.alnm-triangle {
-    width: 0;
-    height: 0;
+.a-t-tog {
     border-left: 25px solid transparent;
     border-right: 0 solid transparent;
-    border-top: 20px solid #2e4756;
+    border-top: 20px solid white;
+}
+.a-t-off {
+    border-left: 25px solid transparent;
+    border-right: 0 solid transparent;
+    border-top: 20px solid #d5dadd;
+}
+.alnm-triangle {
+    width: 0;
+    height: 0; 
     position: absolute;
     bottom: -15px;
     right: 10px;
@@ -38,7 +44,6 @@
 .add-name-input {
     font-size: 16px;
     background: none;
-    color: white;
     border: none;
     padding: 7px;
     width: 100%;
@@ -67,9 +72,9 @@
 }
 
 .list-name:hover {
-    background: #2E4756;
+    background: #d5dadd;
     border-radius: 5px 0 0 5px;
-    color: white;
+    color: black;
 }
 
 @media only screen and (max-height: 850px) {
