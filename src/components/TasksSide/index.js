@@ -49,6 +49,8 @@ export default function TasksSide({ localLoaded, listDelete }) {
         })
         // clear the input
         setTaskInput('')
+        // update local storage
+        updateLocalData(data)
     }
     //need to handle the task success
     const handleTaskSuccess = (e, id) => {
@@ -65,6 +67,7 @@ export default function TasksSide({ localLoaded, listDelete }) {
                     })
                 }
             })
+            
         }
     }
     //handle the input for task
