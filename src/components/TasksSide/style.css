@@ -14,7 +14,21 @@
     margin-top: 30px;
     height: 700px;
     /* will need media query for smaller screens */
+    overflow: scroll;
+    padding-right: 10px;
  }
+ .all-tasks-cont::-webkit-scrollbar {
+    width: 5px;               /* width of the entire scrollbar */
+  }
+  .all-tasks-cont::-webkit-scrollbar-track {
+     background: #00000000;        /*color of the tracking area */
+        
+  }
+  .all-tasks-cont::-webkit-scrollbar-thumb {
+    background-color: #2E4756;    /*color of the scroll thumb*/
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    /* border: 3px solid #009FB7;  creates padding around scroll thumb  */
+  }
  @media only screen and (max-height: 850px) {
     .all-tasks-cont{
         height: 355px;
@@ -30,13 +44,14 @@
     justify-content: space-between;
     /* background-color:#495a64 ; */
     margin-top: 10px;
+    
  }
  .task-cont:hover{
      background:#445e6e ;
  }
  .custom-checkbox{
-     height: 20px;
-     width: 20px;
+     min-height: 20px;
+     min-width: 20px;
      margin-right: 15px;
      /* cursor: pointer; */
      outline: none;
