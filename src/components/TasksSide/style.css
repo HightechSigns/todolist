@@ -14,20 +14,22 @@
     margin-top: 30px;
     height: 700px;
     /* will need media query for smaller screens */
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     padding-right: 10px;
+    padding-bottom: 15px;
  }
  .all-tasks-cont::-webkit-scrollbar {
-    width: 5px;               /* width of the entire scrollbar */
+    width: 5px;/* width of the entire scrollbar */
+    
   }
   .all-tasks-cont::-webkit-scrollbar-track {
-     background: #00000000;        /*color of the tracking area */
+     background: #00000000;/*color of the tracking area */
         
   }
   .all-tasks-cont::-webkit-scrollbar-thumb {
-    background-color: #2E4756;    /*color of the scroll thumb*/
-    border-radius: 20px;       /* roundness of the scroll thumb */
-    /* border: 3px solid #009FB7;  creates padding around scroll thumb  */
+    background-color: #2E4756;/*color of the scroll thumb*/
+    border-radius: 20px;/* roundness of the scroll thumb */
   }
  @media only screen and (max-height: 850px) {
     .all-tasks-cont{
