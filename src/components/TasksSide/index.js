@@ -5,7 +5,6 @@ import checkLight from "../../assets/images/checkLight.svg";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLocalData } from "../../Database/localStorage.js";
-
 export default function TasksSide({ localLoaded, listDelete }) {
     const [loadedTasks, setLoadedTasks] = useState([]);
     const [taskSuccess, setTaskSuccess] = useState(false);
@@ -128,6 +127,7 @@ export default function TasksSide({ localLoaded, listDelete }) {
                                         <p style={toggle ? { color: 'white' } : { color: 'white' }}><span className="task-span" style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
                                     </div>
                                     <img
+                                        
                                         src={trashLight}
                                         alt="#"
                                         onClick={(e) => handleDeleteTask(e, t.id)}

@@ -1,10 +1,11 @@
-import React, { useState, useEffect,useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
 import trashLight from "../../assets/images/trashDark.svg";
 import { useDispatch, useSelector } from "react-redux";
+import ProgressNote from "../ProgressNote";
 //import the actions
 import { getData, setActiveId } from "../../actions";
 import {
@@ -31,6 +32,7 @@ export default function ListsSideBar({
   const handleChange = (e) => {
     setListNameVal(e.target.value);
   };
+
   // handle the delete of the list
   const handleDeleteList = (e, id) => {
     console.log("Deleting this List ID");
@@ -81,10 +83,10 @@ export default function ListsSideBar({
     }
   };
   // if user clicks off the iput area for the list, close it
-  const clickOff=(e)=>{
+  const clickOff = (e) => {
     if (listNameInput.current.contains(e.target)) {
       return
-  }
+    }
     setAdd(false)
   }
   // handles the active list shows little border on the right
@@ -112,11 +114,11 @@ export default function ListsSideBar({
             type="text"
             placeholder="List Name"
             autoFocus
-            
+
           />
         </form>
         <div
-          className={toggle? "alnm-triangle a-t-tog":"alnm-triangle a-t-off"}
+          className={toggle ? "alnm-triangle a-t-tog" : "alnm-triangle a-t-off"}
         ></div>
       </div>
     );
@@ -145,7 +147,7 @@ export default function ListsSideBar({
           Lists
         </p>
         <img
-        ref={listNameInput}
+          ref={listNameInput}
           onClick={(e) => handleAddClick(e)}
           src={toggle ? addLight : addDark}
           alt="#"
@@ -158,6 +160,10 @@ export default function ListsSideBar({
         {/* this will be mapped when data gets loaded */}
         {localLoaded && data.length >= 1
           ? data.map((d, i) => (
+            <div key={i} className="list-name-outer-cont">
+              <ProgressNote
+                data={d}
+              />
               <div
                 key={i}
                 data-tagid={d.id}
@@ -166,6 +172,8 @@ export default function ListsSideBar({
                 onMouseOver={(e) => setHover(d.id)}
                 onMouseLeave={(e) => setHover('')}
               >
+
+
                 {localLoaded && actID === d.id ? (
                   <div
                     className="list-active-bar"
@@ -189,8 +197,12 @@ export default function ListsSideBar({
                 ) : (
                   ""
                 )}
+
               </div>
-            ))
+
+            </div>
+
+          ))
           : ""}
         {/* ---------------------------------------- */}
       </div>

@@ -31,6 +31,7 @@
     background-color: #2E4756;/*color of the scroll thumb*/
     border-radius: 20px;/* roundness of the scroll thumb */
   }
+  
  @media only screen and (max-height: 850px) {
     .all-tasks-cont{
         height: 355px;

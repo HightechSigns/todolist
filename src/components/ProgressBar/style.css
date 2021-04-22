@@ -1,0 +1,11 @@
+.progress-bar-cont{
+    position:absolute;
+    left:0;
+    top: 0;
+    /* width: 20%; */
+    height: 3px;
+    background-color: rgb(0, 160, 184);
+    mix-blend-mode:normal;
+    border-radius: 10px;
+}
+/* normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|difference|exclusion|hue|saturation|color|luminosity; */

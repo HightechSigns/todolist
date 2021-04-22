@@ -61,8 +61,11 @@
     display: flex;
     justify-content: space-between;
     position: relative;
-}
 
+}
+.list-name-outer-cont{
+    position: relative;
+}
 .list-active-bar {
     position: absolute;
     right: 0;
