@@ -15,6 +15,8 @@ export default function TodoList() {
   const toggle = useSelector((state) => state.toggle);
   const actID = useSelector((state) => state.actID);
   const data = useSelector((state) => state.data);
+  const [taskSuccess, setTaskSuccess] = useState(false);
+  const [taskDelete, setTaskDelete] = useState(false);
   const dispatch = useDispatch();
 
   const modeStyles = {
@@ -30,7 +32,7 @@ export default function TodoList() {
   };
   //getting items from DB when page loads
   useEffect(() => {
-    getLocalData(dispatch,setlocalLoaded)
+    getLocalData(dispatch, setlocalLoaded)
   }, [data]);
   return (
     <div
@@ -46,8 +48,17 @@ export default function TodoList() {
           localLoaded={localLoaded}
           setlocalLoaded={setlocalLoaded}
           listDelete={listDelete}
-          setListDelete={setListDelete} />
-        <TasksSide localLoaded={localLoaded} />
+          setListDelete={setListDelete}
+          taskSuccess={taskSuccess}
+          taskDelete={taskDelete}
+        />
+        <TasksSide
+          localLoaded={localLoaded}
+          taskSuccess={taskSuccess}
+          setTaskSuccess={setTaskSuccess}
+          taskDelete={taskDelete}
+          setTaskDelete={setTaskDelete}
+        />
       </section>
     </div>
   );

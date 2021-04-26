@@ -18,6 +18,8 @@ export default function ListsSideBar({
   setListDelete,
   localLoaded,
   setlocalLoaded,
+  taskSuccess,
+  taskDelete
 }) {
   const listNameInput = useRef();
   const [add, setAdd] = useState(false);
@@ -133,14 +135,7 @@ export default function ListsSideBar({
     updateLocalData(data);
   }, [actID, listDelete]);
   return (
-    <div
-      className="sidebar-lists"
-      style={
-        toggle
-          ? { borderRight: " 2px solid white" }
-          : { borderRight: " 2px solid #1f1f1f" }
-      }
-    >
+    <div className="sidebar-lists">
       <div className="title-add-cont">
         {add ? AddListModal() : ""}
         <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
@@ -163,6 +158,8 @@ export default function ListsSideBar({
             <div key={i} className="list-name-outer-cont">
               <ProgressNote
                 data={d}
+                taskSuccess={taskSuccess}
+taskDelete={taskDelete}
               />
               <div
                 key={i}

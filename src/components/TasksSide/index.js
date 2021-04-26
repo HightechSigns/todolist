@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 import trashLight from "../../assets/images/trashLight.svg";
 import checkLight from "../../assets/images/checkLight.svg";
+import ProgressBar from "../ProgressBar";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLocalData } from "../../Database/localStorage.js";
-export default function TasksSide({ localLoaded, listDelete }) {
+
+export default function TasksSide({ localLoaded, listDelete, taskSuccess,
+    setTaskSuccess,
+    taskDelete,
+    setTaskDelete }) {
     const [loadedTasks, setLoadedTasks] = useState([]);
-    const [taskSuccess, setTaskSuccess] = useState(false);
-    const [taskDelete, setTaskDelete] = useState(false);
+    // const [taskSuccess, setTaskSuccess] = useState(false);
+    // const [taskDelete, setTaskDelete] = useState(false);
     const [taskInput, setTaskInput] = useState('');
     //redux
     const actID = useSelector(state => state.actID);
@@ -66,7 +71,7 @@ export default function TasksSide({ localLoaded, listDelete }) {
                     })
                 }
             })
-            
+
         }
     }
     //handle the input for task
@@ -105,11 +110,22 @@ export default function TasksSide({ localLoaded, listDelete }) {
         updateLocalData(data)
         // need to check local storage to see if anything has changed
         // if changed then post new data to local storage
-       
+
     }, [localLoaded, actID, taskSuccess, taskDelete, listDelete]);
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
+            {localLoaded && data.length !== 0 ? data.map((d, i) => {
+                if (d.id === actID) {
+                    return (
+                        <ProgressBar
+                            data={d.tasks}
+                            taskSuccess={taskSuccess}
+                            listDelete={listDelete}
+                        />
+                    )
+                }
+            }) : ""}
             {!localLoaded || !actID || data.length === 0 ? IfNoItems() : ''}
             {localLoaded && data.length !== 0 ?
                 <div className="all-tasks-cont">
@@ -127,7 +143,7 @@ export default function TasksSide({ localLoaded, listDelete }) {
                                         <p style={toggle ? { color: 'white' } : { color: 'white' }}><span className="task-span" style={t.comp ? { textDecoration: 'line-through', color: '#ffffff80' } : { textDecoration: 'none' }}>{t.text}</span></p>
                                     </div>
                                     <img
-                                        
+
                                         src={trashLight}
                                         alt="#"
                                         onClick={(e) => handleDeleteTask(e, t.id)}

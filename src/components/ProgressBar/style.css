@@ -1,11 +1,17 @@
 .progress-bar-cont{
-    position:absolute;
+    /* position:absolute;
     left:0;
-    top: 0;
-    /* width: 20%; */
-    height: 3px;
-    background-color: #00a0b8;
+    top: 0; */
+    margin-top: 15px;
+    width: 565px;
+    height:6px;
     mix-blend-mode:normal;
+    background-color:#2E4756;
+    border-radius: 10px;
+}
+.progress{
+    background-color: #00a0b8;
+    height: 100%;
     border-radius: 10px;
 }
 /* normal|multiply|screen|overlay|darken|lighten|color-dodge|color-burn|difference|exclusion|hue|saturation|color|luminosity; */

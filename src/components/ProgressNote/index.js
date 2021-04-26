@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './style.css';
-export default function ProgressNote({ data }) {
-    const [percentage, setPercentage] = useState('')
-    const [listComp, setListComp] = useState(false)
+export default function ProgressNote({ data,taskSuccess,
+    taskDelete }) {
+    const [percentage, setPercentage] = useState('');
+    // const [listComp, setListComp] = useState(false)
 
     const getPrecentage = () => {
         let a = data.tasks.length;
@@ -24,7 +25,7 @@ export default function ProgressNote({ data }) {
         }
         else if (a === b) {
             setPercentage("100%")
-            setListComp(true)
+            // setListComp(true)
         }
         else {
             setPercentage(`${posWidth}%`)
@@ -34,7 +35,8 @@ export default function ProgressNote({ data }) {
 
     useEffect(() => {
         getPrecentage()
-    }, [])
+    }, [taskSuccess,
+        taskDelete])
     return (
         <div className="progress-note" style={percentage === "100%"? {color:'#00a0b8'}:{color:"", opacity:"50%"}}>
             {percentage} Complete
