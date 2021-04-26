@@ -10,7 +10,9 @@ import { updateLocalData } from "../../Database/localStorage.js";
 export default function TasksSide({ localLoaded, listDelete, taskSuccess,
     setTaskSuccess,
     taskDelete,
-    setTaskDelete }) {
+    setTaskDelete,
+    addTask,
+    setAddTask }) {
     const [loadedTasks, setLoadedTasks] = useState([]);
     // const [taskSuccess, setTaskSuccess] = useState(false);
     // const [taskDelete, setTaskDelete] = useState(false);
@@ -53,6 +55,7 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
         })
         // clear the input
         setTaskInput('')
+        setAddTask(true)
         // update local storage
         updateLocalData(data)
     }
@@ -79,7 +82,7 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
         setTaskInput(e.target.value)
     }
     // add task component
-    const addTask = () => (
+    const addTaskInput = () => (
         <div className="task-input-cont">
             <form onSubmit={e => handleSubmit(e)}>
                 <input className="task-input" spellcheck="true" value={taskInput} onChange={e => handleChange(e)} type="text" placeholder="Enter A Task" style={toggle ? {} : { background: '#2e475633' }} />
@@ -108,10 +111,11 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
         setLoadedTasks([])
         setTaskDelete(false)
         updateLocalData(data)
+        setAddTask(false)
         // need to check local storage to see if anything has changed
         // if changed then post new data to local storage
 
-    }, [localLoaded, actID, taskSuccess, taskDelete, listDelete]);
+    }, [localLoaded, actID, taskSuccess, taskDelete, listDelete,addTask]);
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
@@ -122,6 +126,8 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
                             data={d.tasks}
                             taskSuccess={taskSuccess}
                             listDelete={listDelete}
+                            addTask={addTask}
+                            taskDelete={taskDelete}
                         />
                     )
                 }
@@ -156,7 +162,7 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
                     {/* mapped tasks */}
                 </div>
                 : ''}
-            {localLoaded && data.length !== 0 ? addTask() : ''}
+            {localLoaded && data.length !== 0 ? addTaskInput() : ''}
         </div>
     )
 }

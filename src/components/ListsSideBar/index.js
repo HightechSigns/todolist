@@ -19,7 +19,8 @@ export default function ListsSideBar({
   localLoaded,
   setlocalLoaded,
   taskSuccess,
-  taskDelete
+  taskDelete,
+  addTask
 }) {
   const listNameInput = useRef();
   const [add, setAdd] = useState(false);
@@ -159,7 +160,8 @@ export default function ListsSideBar({
               <ProgressNote
                 data={d}
                 taskSuccess={taskSuccess}
-taskDelete={taskDelete}
+                taskDelete={taskDelete}
+                addTask={addTask}
               />
               <div
                 key={i}

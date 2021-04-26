@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 
 export default function ProgressBar({ data, taskSuccess,
-    listDelete }) {
+    listDelete,addTask,taskDelete }) {
     const [progressWidth, setProgressWidth] = useState("")
     // need to have the data for the specific list
     console.log(data)
@@ -39,7 +39,7 @@ export default function ProgressBar({ data, taskSuccess,
     // function to set the progress width
     useEffect(() => {
         getWidth()
-    }, [data, taskSuccess, listDelete])
+    }, [data, taskSuccess, listDelete,addTask,taskDelete])
     return (
         <div className="progress-bar-cont" >
             <div className="progress" style={{ width: progressWidth }}>

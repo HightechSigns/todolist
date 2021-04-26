@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './style.css';
-export default function ProgressNote({ data,taskSuccess,
-    taskDelete }) {
+export default function ProgressNote({ data, taskSuccess, taskDelete, addTask }) {
     const [percentage, setPercentage] = useState('');
     // const [listComp, setListComp] = useState(false)
 
@@ -14,7 +13,7 @@ export default function ProgressNote({ data,taskSuccess,
                 compArray.push(t)
             }
         })
-        console.log(compArray)
+        console.log(compArray);
         let b = compArray.length;
         let c = 100;
         let d = Math.floor(c / a);
@@ -35,10 +34,9 @@ export default function ProgressNote({ data,taskSuccess,
 
     useEffect(() => {
         getPrecentage()
-    }, [taskSuccess,
-        taskDelete])
+    }, [taskSuccess, taskDelete, addTask])
     return (
-        <div className="progress-note" style={percentage === "100%"? {color:'#00a0b8'}:{color:"", opacity:"50%"}}>
+        <div className="progress-note" style={percentage === "100%" ? { color: '#00a0b8' } : { color: "", opacity: "50%" }}>
             {percentage} Complete
         </div>
     )

@@ -17,6 +17,7 @@ export default function TodoList() {
   const data = useSelector((state) => state.data);
   const [taskSuccess, setTaskSuccess] = useState(false);
   const [taskDelete, setTaskDelete] = useState(false);
+  const [addTask, setAddTask] = useState(false);
   const dispatch = useDispatch();
 
   const modeStyles = {
@@ -51,6 +52,7 @@ export default function TodoList() {
           setListDelete={setListDelete}
           taskSuccess={taskSuccess}
           taskDelete={taskDelete}
+          addTask={addTask}
         />
         <TasksSide
           localLoaded={localLoaded}
@@ -58,6 +60,8 @@ export default function TodoList() {
           setTaskSuccess={setTaskSuccess}
           taskDelete={taskDelete}
           setTaskDelete={setTaskDelete}
+          addTask={addTask}
+          setAddTask={setAddTask}
         />
       </section>
     </div>
