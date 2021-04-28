@@ -11,7 +11,7 @@
      font-size: 35px;
  }
  .all-tasks-cont{
-    margin-top: 20px;
+    margin-top: 10px;
     height: 700px;
     /* will need media query for smaller screens */
     overflow-x: hidden;

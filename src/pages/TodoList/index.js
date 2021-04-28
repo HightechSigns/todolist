@@ -18,6 +18,7 @@ export default function TodoList() {
   const [taskSuccess, setTaskSuccess] = useState(false);
   const [taskDelete, setTaskDelete] = useState(false);
   const [addTask, setAddTask] = useState(false);
+  const [currentListName, setCurrentListName] = useState("");
   const dispatch = useDispatch();
 
   const modeStyles = {
@@ -33,7 +34,7 @@ export default function TodoList() {
   };
   //getting items from DB when page loads
   useEffect(() => {
-    getLocalData(dispatch, setlocalLoaded)
+    getLocalData(dispatch, setlocalLoaded);
   }, [data]);
   return (
     <div
@@ -53,6 +54,7 @@ export default function TodoList() {
           taskSuccess={taskSuccess}
           taskDelete={taskDelete}
           addTask={addTask}
+          setCurrentListName={setCurrentListName}
         />
         <TasksSide
           localLoaded={localLoaded}
@@ -62,6 +64,7 @@ export default function TodoList() {
           setTaskDelete={setTaskDelete}
           addTask={addTask}
           setAddTask={setAddTask}
+          currentListName={currentListName}
         />
       </section>
     </div>

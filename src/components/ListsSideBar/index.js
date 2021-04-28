@@ -20,7 +20,8 @@ export default function ListsSideBar({
   setlocalLoaded,
   taskSuccess,
   taskDelete,
-  addTask
+  addTask,
+  setCurrentListName
 }) {
   const listNameInput = useRef();
   const [add, setAdd] = useState(false);
@@ -51,6 +52,7 @@ export default function ListsSideBar({
       });
       if (data.length >= 1) {
         let newCurrId = data[0].id;
+        setCurrentListName(data[0].name)
         setLocalActiveId(newCurrId);
         dispatch(setActiveId(newCurrId));
       } else {
@@ -73,6 +75,7 @@ export default function ListsSideBar({
     dispatch(setActiveId(obj.id));
     // set the active list id in Local storage
     setLocalActiveId(obj.id);
+    setCurrentListName(obj.name)
     // -----------
     setAdd(false);
     setlocalLoaded(true);
@@ -98,6 +101,11 @@ export default function ListsSideBar({
       dispatch(setActiveId(""));
       dispatch(setActiveId(id));
       setLocalActiveId(id);
+      data.map((d,i)=>{
+        if(d.id === id){
+          setCurrentListName(d.name)
+        }
+      })
     } else {
       console.log("List ID is alreaddy active");
     }
