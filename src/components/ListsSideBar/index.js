@@ -101,8 +101,8 @@ export default function ListsSideBar({
       dispatch(setActiveId(""));
       dispatch(setActiveId(id));
       setLocalActiveId(id);
-      data.map((d,i)=>{
-        if(d.id === id){
+      data.map((d, i) => {
+        if (d.id === id) {
           setCurrentListName(d.name)
         }
       })
@@ -179,8 +179,6 @@ export default function ListsSideBar({
                 onMouseOver={(e) => setHover(d.id)}
                 onMouseLeave={(e) => setHover('')}
               >
-
-
                 {localLoaded && actID === d.id ? (
                   <div
                     className="list-active-bar"
@@ -206,7 +204,6 @@ export default function ListsSideBar({
                 )}
 
               </div>
-
             </div>
 
           ))

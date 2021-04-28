@@ -18,7 +18,7 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
     // const [taskSuccess, setTaskSuccess] = useState(false);
     // const [taskDelete, setTaskDelete] = useState(false);
     const [taskInput, setTaskInput] = useState('');
-    
+
     //redux
     const actID = useSelector(state => state.actID);
     const toggle = useSelector(state => state.toggle);
@@ -117,11 +117,11 @@ export default function TasksSide({ localLoaded, listDelete, taskSuccess,
         // need to check local storage to see if anything has changed
         // if changed then post new data to local storage
 
-    }, [localLoaded, actID, taskSuccess, taskDelete, listDelete,addTask]);
+    }, [localLoaded, actID, taskSuccess, taskDelete, listDelete, addTask]);
     return (
         <div className="task-section">
             <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>Tasks</p>
-            <h1 style={{textTransform:"capitalize", margin:"10px 0 0 0"}}>{currentListName}</h1>
+            {actID && data.length >= 1 ? <h1 style={{ textTransform: "capitalize", margin: "10px 0 0 0" }}>{currentListName}</h1>:''}
             {localLoaded && data.length !== 0 ? data.map((d, i) => {
                 if (d.id === actID) {
                     return (
