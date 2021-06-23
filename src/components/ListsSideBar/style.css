@@ -6,7 +6,6 @@
 
 .title-add-cont {
     display: flex;
-    max-width: 260px;
     width: 100%;
     justify-content: space-between;
     position: relative;
@@ -15,12 +14,10 @@
 .add-list-name-modal {
     position: absolute;
     padding: 10px;
-    max-width: 260px;
     width: 100%;
     top: -80px;
     z-index: 100;
     border-radius: 5px;
-   
 }
 
 .a-t-tog {
@@ -28,14 +25,16 @@
     border-right: 0 solid transparent;
     border-top: 20px solid white;
 }
+
 .a-t-off {
     border-left: 25px solid transparent;
     border-right: 0 solid transparent;
     border-top: 20px solid #d5dadd;
 }
+
 .alnm-triangle {
     width: 0;
-    height: 0; 
+    height: 0;
     position: absolute;
     bottom: -15px;
     right: 10px;
@@ -51,7 +50,7 @@
 }
 
 .list-names-cont {
-    width: 260px;
+    width: 100%;
     height: 100%;
     padding-top: 30px;
 }
@@ -61,11 +60,12 @@
     display: flex;
     justify-content: space-between;
     position: relative;
-
 }
-.list-name-outer-cont{
+
+.list-name-outer-cont {
     position: relative;
 }
+
 .list-active-bar {
     position: absolute;
     right: 0;
@@ -80,22 +80,23 @@
     color: black;
 }
 
-@media only screen and (max-height: 850px) {
+@media only screen and (max-width: 999px) {
+    /*Tablets [601px -> 1000px]*/
     .sidebar-lists {
         height: 450px;
-        min-width: 200px;
+        min-width: 150px;
     }
     .title-add-cont, .list-names-cont {
-        min-width: 190px;
+        min-width: 150px;
     }
 }
 
-@media only screen and (max-width: 550px) {
+@media only screen and (max-width: 600px) {
+    /*Big smartphones [426px -> 600px]*/
     .sidebar-lists {
-        height: 450px;
-        width: 200px;
+        display: none;
     }
     .title-add-cont, .list-names-cont {
         width: 190px;
     }
-} 
+}
