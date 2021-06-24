@@ -86,4 +86,7 @@
      .task-section{
         padding-left: 0px;
     }
+    .all-tasks-cont{
+        min-height: 500px;
+    }
  }

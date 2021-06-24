@@ -6,6 +6,7 @@ import OnOffLineUser from "../../components/OnOffLineUser";
 import ListsSideBar from "../../components/ListsSideBar";
 import ModeSelector from "../../components/ModeSelector";
 import TasksSide from "../../components/TasksSide";
+import MobileListMenu from "../../components/MobileListMenu";
 //import DB
 import { getLocalData } from "../../Database/localStorage.js";
 // import { getData, setActiveId } from "../../actions";
@@ -46,6 +47,7 @@ export default function TodoList() {
         <ModeSelector />
       </div>
       <section className="main-body-cont">
+        <MobileListMenu/>
         <ListsSideBar
           localLoaded={localLoaded}
           setlocalLoaded={setlocalLoaded}

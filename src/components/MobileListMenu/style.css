@@ -1,0 +1,59 @@
+.m-menu-list {
+    max-height: 200px;
+    width: 100%;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    z-index: 999;
+    border: 1px solid white;
+}
+
+.menu-icon {
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    border-radius: 100%;
+    bottom: 30px;
+    left: 20px;
+    background: #2E4756;
+    display: flex;
+    box-shadow: 0 6px 13px rgba(0, 0, 0, 0.301);
+    justify-content: center;
+    align-items: center;
+}
+.icon-cont{
+    margin: auto;
+    position: absolute;
+    height: 20px;
+    width: 30px;
+    
+}
+.m-icon-item {
+    background: white;
+    height: 3px;
+    border-radius: 10px;
+    position: absolute;
+    left: 0;
+    top: 0;
+
+}
+
+#m-i-one {
+    width: 25px;
+    left: 0;
+    top:0 ;
+}
+
+#m-i-two {
+    width: 30px;
+}
+
+#m-i-three {
+    width: 20px;
+}
+.menu-closed{
+    display: none;
+}
+.menu-items-cont{
+    height: 200px;
+}
