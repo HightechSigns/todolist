@@ -5,7 +5,7 @@ export default function ProgressBar({ data, taskSuccess,
     listDelete,addTask,taskDelete }) {
     const [progressWidth, setProgressWidth] = useState("")
     // need to have the data for the specific list
-    console.log(data)
+    // console.log(data)
     // need to divide the amount of tasks by the width of the container
     const getWidth = () => {
         let a = data.length;
@@ -16,18 +16,18 @@ export default function ProgressBar({ data, taskSuccess,
                 compArray.push(t)
             }
         })
-        console.log(compArray);
+        // console.log(compArray);
         let b = compArray.length;
         let c = 100;
         let d = Math.floor(c / a);
         let posWidth = d * b;
         if (b <= 0) {
             setProgressWidth('0%');
-            console.log(posWidth)
+            // console.log(posWidth)
         }else if(a === b){
             setProgressWidth('100%');
         } else {
-            console.log(posWidth)
+            // console.log(posWidth)
             setProgressWidth(`${posWidth}%`)
         }
         // if (posWidth >= 97 || posWidth <= 110) {

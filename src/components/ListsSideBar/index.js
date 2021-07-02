@@ -39,22 +39,25 @@ export default function ListsSideBar({
 
   // handle the delete of the list
   const handleDeleteList = (e, id) => {
-    console.log("Deleting this List ID");
-    console.log(id);
-    console.log("Deleting this List ID");
+    console.log("delete id = " + id)
+    console.log("active id = " + actID)
+  
     if (e) {
       setListDelete(true);
       data.map((d, i) => {
         if (d.id === id) {
           data.splice(i, 1);
           console.log("deleted List: " + id);
+          
         }
       });
       if (data.length >= 1) {
         let newCurrId = data[0].id;
         setCurrentListName(data[0].name)
         setLocalActiveId(newCurrId);
+        dispatch(setActiveId(""));
         dispatch(setActiveId(newCurrId));
+        console.log("new current id apparently = " + newCurrId)
       } else {
         console.log("No more lists");
         setLocalActiveId("");
@@ -101,7 +104,7 @@ export default function ListsSideBar({
       dispatch(setActiveId(""));
       dispatch(setActiveId(id));
       setLocalActiveId(id);
-      data.map((d, i) => {
+      data.map(d => {
         if (d.id === id) {
           setCurrentListName(d.name)
         }
@@ -172,7 +175,7 @@ export default function ListsSideBar({
                 addTask={addTask}
               />
               <div
-                key={i}
+                
                 data-tagid={d.id}
                 className="list-name"
                 onClick={(e) => handleActiveList(d.id)}

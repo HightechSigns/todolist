@@ -1,101 +1,114 @@
 .sidebar-lists {
-    width: 270px;
-    height: 800px;
-    padding-right: 10px;
+  width: 270px;
+  height: 800px;
+  padding-right: 10px;
 }
 
 .title-add-cont {
-    display: flex;
-    max-width: 260px;
-    width: 100%;
-    justify-content: space-between;
-    position: relative;
+  display: flex;
+  max-width: 260px;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
 }
 
 .add-list-name-modal {
-    position: absolute;
-    padding: 10px;
-    max-width: 260px;
-    width: 100%;
-    top: -80px;
-    z-index: 100;
-    border-radius: 5px;
-   
+  position: absolute;
+  padding: 10px;
+  max-width: 260px;
+  width: 100%;
+  top: -80px;
+  z-index: 100;
+  border-radius: 5px;
 }
 
 .a-t-tog {
-    border-left: 25px solid transparent;
-    border-right: 0 solid transparent;
-    border-top: 20px solid white;
+  border-left: 25px solid transparent;
+  border-right: 0 solid transparent;
+  border-top: 20px solid white;
 }
 .a-t-off {
-    border-left: 25px solid transparent;
-    border-right: 0 solid transparent;
-    border-top: 20px solid #d5dadd;
+  border-left: 25px solid transparent;
+  border-right: 0 solid transparent;
+  border-top: 20px solid #d5dadd;
 }
 .alnm-triangle {
-    width: 0;
-    height: 0; 
-    position: absolute;
-    bottom: -15px;
-    right: 10px;
+  width: 0;
+  height: 0;
+  position: absolute;
+  bottom: -15px;
+  right: 10px;
 }
 
 .add-name-input {
-    font-size: 16px;
-    background: none;
-    border: none;
-    padding: 7px;
-    width: 100%;
-    outline: none;
+  font-size: 16px;
+  background: none;
+  border: none;
+  padding: 7px;
+  width: 100%;
+  outline: none;
 }
 
 .list-names-cont {
-    width: 260px;
-    height: 100%;
-    padding-top: 30px;
+  width: 260px;
+  height: 100%;
+  padding-top: 30px;
 }
 
 .list-name {
-    padding: 15px;
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
 }
-.list-name-outer-cont{
-    position: relative;
+.list-name-outer-cont {
+  position: relative;
 }
 .list-active-bar {
-    position: absolute;
-    right: 0;
-    top: 0;
-    height: 100%;
-    width: 3px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
 }
 
 .list-name:hover {
-    background: #d5dadd;
-    border-radius: 5px 0 0 5px;
-    color: black;
+  background: #d5dadd;
+  border-radius: 5px 0 0 5px;
+  color: black;
 }
 
+@media only screen and (max-width: 1050px) {
+  /*Tablets [601px -> 1050px]*/
+}
 @media only screen and (max-height: 850px) {
-    .sidebar-lists {
-        height: 450px;
-        min-width: 200px;
-    }
-    .title-add-cont, .list-names-cont {
-        min-width: 190px;
-    }
+  .sidebar-lists {
+    height: 450px;
+    min-width: 200px;
+  }
+  .title-add-cont,
+  .list-names-cont {
+    min-width: 190px;
+  }
 }
-
-@media only screen and (max-width: 550px) {
-    .sidebar-lists {
+@media only screen and (max-width: 600px) {
+  /* Big smartphones [426px -> 600px] */
+  .sidebar-lists {
+    display: none;
+  }
+  /* .sidebar-lists {
         height: 450px;
         width: 200px;
-    }
-    .title-add-cont, .list-names-cont {
-        width: 190px;
-    }
-} 
+    } */
+  .title-add-cont,
+  .list-names-cont {
+    width: 190px;
+  }
+}
+@media only screen and (max-width: 425px) {
+  /*Small smartphones [325px -> 425px]*/
+
+  .sidebar-lists {
+    width: 150px;
+  }
+}

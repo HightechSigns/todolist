@@ -32,9 +32,19 @@ export default function TodoList() {
       transition: "all 300ms ease-out",
     },
   };
+  // setting the current list name hopfully when program loads and refreshes
+  const getName =()=>{
+    // set name when load
+    data.map((d) => {
+      if (d.id === actID) {
+        setCurrentListName(d.name);
+      }
+    });
+  }
   //getting items from DB when page loads
   useEffect(() => {
     getLocalData(dispatch, setlocalLoaded);
+    getName()
   }, [data]);
   return (
     <div
@@ -65,6 +75,7 @@ export default function TodoList() {
           addTask={addTask}
           setAddTask={setAddTask}
           currentListName={currentListName}
+          getName={getName}
         />
       </section>
     </div>
