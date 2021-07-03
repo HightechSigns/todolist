@@ -14,3 +14,10 @@
     height: 100%;
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 600px){
+	/*Big smartphones [426px -> 600px]*/
+    .progress-bar-cont{
+        width: 100%;
+    }
+}

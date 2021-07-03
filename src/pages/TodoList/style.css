@@ -5,7 +5,6 @@
 }
 .header-main-cont{
     padding: 60px;
-    
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -14,24 +13,25 @@
     padding: 0 5rem;
     display: flex;
 }
-@media only screen and (max-width: 1050px) {
-    /*Tablets [601px -> 1050px]*/
-    
-  }
-  @media only screen and (max-width: 600px) {
-    /* Big smartphones [426px -> 600px] */
-    .sidebar-lists {
-      display: none;
-    }
-  }
-  @media only screen and (max-width: 425px) {
-    /*Small smartphones [325px -> 425px]*/
-    .main-body-cont{
-      margin:0;
-      padding: 0;
-    }
+
+@media only screen and (max-width: 600px){
+	/*Big smartphones [426px -> 600px]*/
     .header-main-cont{
-        padding: 25px;
-       
+        padding: 20px;
     }
-  }
+    .on-off-text {
+        font-size: 12px;
+    }
+    .on-off-cont>img{
+        height: 16px;
+    }
+    .mode-selector-cont{
+       margin-top: 10px;
+       font-size: 12px;
+    }
+    .main-body-cont{
+        padding: 0 2rem;
+        display: flex;
+    }
+    
+}

@@ -123,7 +123,7 @@ export default function TasksSide({
 
   // Use effect
   useEffect(() => {
-    getTasks();
+    // getTasks();
     setTaskSuccess(false);
     setLoadedTasks([]);
     setTaskDelete(false);

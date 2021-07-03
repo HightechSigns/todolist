@@ -81,23 +81,12 @@
  .task-span{
      text-transform: capitalize;
  }
-
- @media only screen and (max-width: 1050px) {
-    /*Tablets [601px -> 1050px]*/
-    
-  }
-  @media only screen and (max-width: 600px) {
-    /* Big smartphones [426px -> 600px] */
-    .sidebar-lists {
-      display: none;
+ @media only screen and (max-width: 600px){
+     /* task section styles */
+     .task-section{
+        padding-left: 0px;
     }
-  }
-  @media only screen and (max-width: 425px) {
-    /*Small smartphones [325px -> 425px]*/
-   
-    .task-section {
-      padding: 0;
-      margin: 0;
-      max-width: 350px;
+    .all-tasks-cont{
+        min-height: 500px;
     }
-  }
+ }

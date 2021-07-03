@@ -162,7 +162,7 @@ export default function ListsSideBar({
           role="button"
           aria-label="Create a new list..."
         />
-      </div>
+      </div> 
       <div className="list-names-cont">
         {/* this will be mapped when data gets loaded */}
         {localLoaded && data.length >= 1
