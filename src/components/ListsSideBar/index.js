@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
-import trashLight from "../../assets/images/trashDark.svg";
+import trashDark from "../../assets/images/trashDark.svg";
+import trashLight from "../../assets/images/trashLight.svg";
 import { useDispatch, useSelector } from "react-redux";
 import ProgressNote from "../ProgressNote";
 //import the actions
@@ -21,7 +22,9 @@ export default function ListsSideBar({
   taskSuccess,
   taskDelete,
   addTask,
-  setCurrentListName
+  setCurrentListName,
+  menuOpen,
+  setMenuOpen
 }) {
   const listNameInput = useRef();
   const [add, setAdd] = useState(false);
@@ -41,14 +44,14 @@ export default function ListsSideBar({
   const handleDeleteList = (e, id) => {
     console.log("delete id = " + id)
     console.log("active id = " + actID)
-  
+
     if (e) {
       setListDelete(true);
       data.map((d, i) => {
         if (d.id === id) {
           data.splice(i, 1);
           console.log("deleted List: " + id);
-          
+
         }
       });
       if (data.length >= 1) {
@@ -146,73 +149,121 @@ export default function ListsSideBar({
     // if changed then post new data to local storage
     updateLocalData(data);
   }, [actID, listDelete]);
+
+
   return (
-    <div className="sidebar-lists">
-      <div className="title-add-cont">
-        {add ? AddListModal() : ""}
-        <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
-          Lists
-        </p>
-        <img
-          ref={listNameInput}
-          onClick={(e) => handleAddClick(e)}
-          src={toggle ? addLight : addDark}
-          alt="#"
-          style={{ cursor: "pointer" }}
-          role="button"
-          aria-label="Create a new list..."
-        />
-      </div> 
-      <div className="list-names-cont">
-        {/* this will be mapped when data gets loaded */}
-        {localLoaded && data.length >= 1
-          ? data.map((d, i) => (
-            <div key={i} className="list-name-outer-cont">
-              <ProgressNote
-                data={d}
-                taskSuccess={taskSuccess}
-                taskDelete={taskDelete}
-                addTask={addTask}
-              />
-              <div
-                
-                data-tagid={d.id}
-                className="list-name"
-                onClick={(e) => handleActiveList(d.id)}
-                onMouseOver={(e) => setHover(d.id)}
-                onMouseLeave={(e) => setHover('')}
-              >
-                {localLoaded && actID === d.id ? (
-                  <div
-                    className="list-active-bar"
-                    style={
-                      toggle
-                        ? { background: "#20FC8F" }
-                        : { background: "#2e4756" }
-                    }
-                  ></div>
-                ) : (
-                  ""
-                )}
-                <p style={{ textTransform: "capitalize" }}>{d.name}</p>
-                {hover === d.id ? (
-                  <img
-                    src={trashLight}
-                    alt="#"
-                    onClick={(e) => handleDeleteList(e, d.id)}
-                    style={{ cursor: "pointer", width: "15px" }}
-                  />
-                ) : (
-                  ""
-                )}
+    <div>
+      <div className="sidebar-lists">
+        <div className="title-add-cont">
+          {add ? AddListModal() : ""}
+          <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
+            Lists
+          </p>
+          <img
+            ref={listNameInput}
+            onClick={(e) => handleAddClick(e)}
+            src={toggle ? addLight : addDark}
+            alt="#"
+            style={{ cursor: "pointer" }}
+            role="button"
+            aria-label="Create a new list..."
+          />
+        </div>
+        <div className="list-names-cont">
+          {/* this will be mapped when data gets loaded */}
+          {localLoaded && data.length >= 1
+            ? data.map((d, i) => (
+              <div key={i} className="list-name-outer-cont">
+                <ProgressNote
+                  data={d}
+                  taskSuccess={taskSuccess}
+                  taskDelete={taskDelete}
+                  addTask={addTask}
+                />
+                <div
 
+                  data-tagid={d.id}
+                  className="list-name"
+                  onClick={(e) => handleActiveList(d.id)}
+                  onMouseOver={(e) => setHover(d.id)}
+                  onMouseLeave={(e) => setHover('')}
+                >
+                  {localLoaded && actID === d.id ? (
+                    <div
+                      className="list-active-bar"
+                      style={
+                        toggle
+                          ? { background: "#20FC8F" }
+                          : { background: "#2e4756" }
+                      }
+                    ></div>
+                  ) : (
+                    ""
+                  )}
+                  <p style={{ textTransform: "capitalize" }}>{d.name}</p>
+                  {hover === d.id ? (
+                    <img
+                      src={trashDark}
+                      alt="#"
+                      onClick={(e) => handleDeleteList(e, d.id)}
+                      style={{ cursor: "pointer", width: "15px" }}
+                    />
+                  ) : (
+                    ""
+                  )}
+
+                </div>
               </div>
-            </div>
 
-          ))
-          : ""}
-        {/* ---------------------------------------- */}
+            ))
+            : ""}
+          {/* ---------------------------------------- */}
+        </div>
+      </div>
+      {/* ------------------ Mobile menu ------------------- */}
+      <div className={menuOpen ? 'sbl-mb-overlay-open' : 'sbl-mb-overlay-closed'} onClick={e => setMenuOpen(false)}>
+        {/* empty */}
+      </div>
+      <div className={menuOpen ? 'sbl-mb-cont-open' : 'sbl-mb-cont-closed'}>
+        {/* ------------- header for menu ------------- */}
+        <div className="sbl-mb-header" style={menuOpen ? { display: 'flex' } : { display: 'none' }}>
+          <div className="sbl-mb-h-add">
+            <p style={{ color: "#ffffff50" }}>
+              Lists
+            </p>
+            <img
+              ref={listNameInput}
+              onClick={(e) => handleAddClick(e)}
+              src={addLight}
+              alt="#"
+              style={{ cursor: "pointer" }}
+              role="button"
+              aria-label="Create a new list..."
+            />
+          </div>
+          <div className='sbl-input-add-cont'>
+            <input type="text" placeholder='New List' className="sbl-input" />
+            <button className="mobile-add-btn">Add</button>
+          </div>
+        </div>
+        {/* ---------- Lists -------------- */}
+        <div className="sbl-mb-list-cont" style={menuOpen ? { display: 'flex' } : { display: 'none' }}>
+          <div className="sbl-list-item" style={{ background: "#243641" }}>
+            <div className='sbl-active' style={{ background: "#20FC8F" }}>
+            </div>
+            <div className="mb-li-selector">
+              <p style={{ color: 'white' }}>List Name</p>
+            </div>
+            <div className="mb-li-delete-btn">
+              <img
+                src={trashLight}
+                alt="#"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+
   );
 }

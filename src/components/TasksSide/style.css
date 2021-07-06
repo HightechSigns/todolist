@@ -32,11 +32,7 @@
     border-radius: 20px;/* roundness of the scroll thumb */
   }
   
- @media only screen and (max-height: 850px) {
-    .all-tasks-cont{
-        height: 355px;
-     }
- } 
+
  
  .task-cont{
      width: 100%;
@@ -81,12 +77,18 @@
  .task-span{
      text-transform: capitalize;
  }
+ @media only screen and (min-height: 850px) {
+    .all-tasks-cont{
+        max-height: 470px;
+    }
+ } 
+ 
  @media only screen and (max-width: 600px){
      /* task section styles */
      .task-section{
         padding-left: 0px;
     }
     .all-tasks-cont{
-        min-height: 500px;
+        max-height: 470px;
     }
  }

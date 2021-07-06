@@ -75,6 +75,8 @@ export default function TodoList() {
           taskDelete={taskDelete}
           addTask={addTask}
           setCurrentListName={setCurrentListName}
+          menuOpen={menuOpen}
+          setMenuOpen={setMenuOpen}
         />
         <TasksSide
           localLoaded={localLoaded}
