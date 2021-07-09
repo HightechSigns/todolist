@@ -101,6 +101,7 @@
 .sbl-mb-list-cont {
   padding-top: 25px;
   margin-bottom: 100px;
+  flex-direction: column;
 }
 
 .sbl-mb-cont-open {
@@ -164,6 +165,7 @@
   /* background: #bbbbbb; */
   width: 100%;
   border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 .sbl-active {
@@ -176,6 +178,7 @@
 }
 
 .mb-li-selector {
+  width: 100%;
   padding: 12px 15px;
 }
 
@@ -184,7 +187,26 @@
   background: rgba(255, 255, 255, 0.151);
   border-radius: 0 5px 5px 0;
 }
-
+.mb-add-img-false{
+  transform: rotate(0deg);
+  transition: all 250ms ease-out;
+}
+.mb-add-img-true{
+  transform: rotate(45deg);
+  transition: all 250ms ease-in;
+}
+.mb-add-list-img{
+  width: 200px;
+  position: absolute;
+  right: 23px;
+  top: 50px;
+}
+.mb-add-list-img-hide{
+  width: 200px;
+  position: absolute;
+  right: 50px;
+  top: 120px;
+}
 /* ------------- media queries -------------- */
 
 @media only screen and (max-width: 999px) {

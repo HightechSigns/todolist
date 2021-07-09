@@ -90,6 +90,6 @@ export default function TodoList() {
           getName={getName}
         />
       </section>
-    </div>
+    </div> 
   );
 }
