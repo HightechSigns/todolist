@@ -145,7 +145,11 @@ export default function ListsSideBar({
     // if changed then post new data to local storage
     updateLocalData(data);
   }, [actID, listDelete]);
-
+  useEffect(()=>{
+      if(mbAdd){
+        setMbAdd(false)
+      }
+  },[menuOpen])
   return (
     <div>
       <div className="sidebar-lists">

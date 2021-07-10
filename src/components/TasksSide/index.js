@@ -34,8 +34,11 @@ export default function TasksSide({
   const IfNoItems = () => {
     return (
       <div className="no-items-info-cont">
-        <p className="no-items">
+        <p className="no-items ni-desktop">
           Let's start a new List! Click the Add icon next to "Lists"
+        </p>
+        <p className="no-items ni-mobile">
+          Let's start a new List! Click the menu below to add a new Task List!
         </p>
       </div>
     );

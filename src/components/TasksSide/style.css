@@ -10,6 +10,18 @@
  .no-items{
      font-size: 35px;
  }
+ .ni-mobile{
+    display: none;
+   }
+ @media only screen and (max-width:400px){
+    .ni-desktop{
+     display: none;
+    }
+    .ni-mobile{
+     display: block;
+    }
+ }
+ 
  .all-tasks-cont{
     margin-top: 10px;
     height: 700px;
