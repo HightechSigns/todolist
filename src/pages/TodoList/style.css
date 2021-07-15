@@ -1,7 +1,3 @@
-.todo-main-page {
-    min-height: 100vh;
-}
-
 .header-main-cont {
     padding: 60px;
     display: flex;
@@ -32,11 +28,5 @@
     .main-body-cont {
         padding: 0 2rem;
         display: flex;
-    }
-}
-@media only screen and (max-height: 813px) {
-    .todo-main-page {
-      
-        height: 812px;
     }
 }
