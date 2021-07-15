@@ -47,6 +47,7 @@ export default function TodoList() {
   //getting items from DB when page loads
   useEffect(() => {
     getLocalData(dispatch, setlocalLoaded);
+    toggle? document.body.style.background = "#1f1f1f":document.body.style.background = "White";
     getName()
   }, [data]);
   return (

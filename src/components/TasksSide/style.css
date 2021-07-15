@@ -1,106 +1,117 @@
- .task-section{
-     padding-left: 20px;
-     /* background-color: rgb(0, 255, 85); */
-     max-width: 600px;
-     width: 100%;
- }
- .no-items-info-cont{
-     margin-top: 25px;
- }
- .no-items{
-     font-size: 35px;
- }
- .ni-mobile{
+.task-section {
+  padding-left: 20px;
+  /* background-color: rgb(0, 255, 85); */
+  max-width: 600px;
+  width: 100%;
+}
+.no-items-info-cont {
+  margin-top: 25px;
+}
+.no-items {
+  font-size: 35px;
+}
+.ni-mobile {
+  display: none;
+}
+@media only screen and (max-width: 400px) {
+  .ni-desktop {
     display: none;
-   }
- @media only screen and (max-width:400px){
-    .ni-desktop{
-     display: none;
-    }
-    .ni-mobile{
-     display: block;
-    }
- }
- 
- .all-tasks-cont{
-    margin-top: 10px;
-    height: 700px;
-    /* will need media query for smaller screens */
-    overflow-x: hidden;
-    overflow-y: scroll;
-    padding-right: 10px;
-    padding-bottom: 15px;
- }
- .all-tasks-cont::-webkit-scrollbar {
-    width: 5px;/* width of the entire scrollbar */
-    
   }
-  .all-tasks-cont::-webkit-scrollbar-track {
-     background: #00000000;/*color of the tracking area */
-        
+  .ni-mobile {
+    display: block;
   }
-  .all-tasks-cont::-webkit-scrollbar-thumb {
-    background-color: #2E4756;/*color of the scroll thumb*/
-    border-radius: 20px;/* roundness of the scroll thumb */
+}
+
+.all-tasks-cont {
+  margin-top: 10px;
+  height: 100%;
+  max-height: 470px;
+  /* will need media query for smaller screens */
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-right: 10px;
+  padding-bottom: 15px;
+}
+.all-tasks-cont::-webkit-scrollbar {
+  width: 5px; /* width of the entire scrollbar */
+}
+.all-tasks-cont::-webkit-scrollbar-track {
+  background: #00000000; /*color of the tracking area */
+}
+.all-tasks-cont::-webkit-scrollbar-thumb {
+  background-color: #2e4756; /*color of the scroll thumb*/
+  border-radius: 20px; /* roundness of the scroll thumb */
+}
+
+.task-cont {
+  width: 100%;
+  display: flex;
+  /* background-color: aqua; */
+  padding: 15px 20px;
+  border-radius: 5px;
+  justify-content: space-between;
+  /* background-color:#495a64 ; */
+  margin-top: 10px;
+}
+.task-cont:hover {
+  background: #445e6e;
+}
+.custom-checkbox {
+  min-height: 20px;
+  min-width: 20px;
+  margin-right: 15px;
+  /* cursor: pointer; */
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff80;
+}
+
+/* task input box */
+.task-input-cont {
+  width: 100%;
+}
+.task-input {
+  width: 100%;
+  padding: 15px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+}
+.task-span {
+  text-transform: capitalize;
+}
+@media only screen and (max-width: 600px) {
+  /* task section styles */
+  .task-section {
+    padding-left: 0px;
   }
-  
-
  
- .task-cont{
-     width: 100%;
-    display: flex;
-    /* background-color: aqua; */
-    padding: 15px 20px;
-    border-radius: 5px;
-    justify-content: space-between;
-    /* background-color:#495a64 ; */
-    margin-top: 10px;
-    
- }
- .task-cont:hover{
-     background:#445e6e ;
- }
- .custom-checkbox{
-     min-height: 20px;
-     min-width: 20px;
-     margin-right: 15px;
-     /* cursor: pointer; */
-     outline: none;
-     border: none;
-     border-radius: 5px;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     color: #ffffff80;
- }
+}
+@media only screen and (max-width:1440px) {
+  .all-tasks-cont{
+    max-height: 370px;
+  }
+}
+@media (max-width:376px) and (max-height:813px){
+	/* iphone x */
+  .all-tasks-cont{
+    max-height: 470px;
+  }
+}
 
- /* task input box */
- .task-input-cont{
-     width: 100%;
-
- }
- .task-input{
-     width: 100%;
-     padding: 15px;
-     border-radius: 5px;
-     outline: none;
-     border: none;
- }
- .task-span{
-     text-transform: capitalize;
- }
- @media only screen and (min-height: 850px) {
-    .all-tasks-cont{
-        max-height: 470px;
-    }
- } 
- 
- @media only screen and (max-width: 600px){
-     /* task section styles */
-     .task-section{
-        padding-left: 0px;
-    }
-    .all-tasks-cont{
-        max-height: 470px;
-    }
- }
+@media (max-width:376px) and (max-height:668px){
+	/* iphone 8 */
+  .all-tasks-cont{
+    max-height: 330px;
+  }
+}
+@media (max-width:321px) and (max-height:569px){
+	/* iphone se */
+  .all-tasks-cont{
+    max-height: 230px;
+  }
+}
