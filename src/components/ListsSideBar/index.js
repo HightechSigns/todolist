@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
 // import assets
-import addNewListImg from "../../assets/images/addnewList.png"
+import addNewListImg from "../../assets/images/addnewList.png";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
 import trashDark from "../../assets/images/trashDark.svg";
@@ -29,6 +29,7 @@ export default function ListsSideBar({
   setMenuOpen,
 }) {
   const listNameInput = useRef();
+  const listItemDltBtn = useRef();
   const [add, setAdd] = useState(false);
   const [mbAdd, setMbAdd] = useState(false);
   const [hover, setHover] = useState("");
@@ -88,7 +89,7 @@ export default function ListsSideBar({
     setAdd(false);
     setlocalLoaded(true);
     setMenuOpen(false);
-    setListNameVal('');
+    setListNameVal("");
     setMbAdd(false);
   };
   // if user clicks off the iput area for the list, close it
@@ -145,11 +146,11 @@ export default function ListsSideBar({
     // if changed then post new data to local storage
     updateLocalData(data);
   }, [actID, listDelete]);
-  useEffect(()=>{
-      if(mbAdd){
-        setMbAdd(false)
-      }
-  },[menuOpen])
+  useEffect(() => {
+    if (mbAdd) {
+      setMbAdd(false);
+    }
+  }, [menuOpen]);
   return (
     <div>
       <div className="sidebar-lists">
@@ -170,49 +171,47 @@ export default function ListsSideBar({
         </div>
         <div className="list-names-cont">
           {/* this will be mapped when data gets loaded */}
+          {/* testing new desktop list button */}
           {localLoaded && data.length >= 1
             ? data.map((d, i) => (
-                <div key={i} className="list-name-outer-cont">
-                  <ProgressNote
+              <div
+            className="dtl-list-item"
+            style={
+              toggle
+                ? { background: "none", color: "white" }
+                : { background: "none", color: "#1f1f1f" }
+            }
+            key={i}
+          >
+            <ProgressNote
                     data={d}
                     taskSuccess={taskSuccess}
                     taskDelete={taskDelete}
                     addTask={addTask}
                   />
-                  <div
-                    data-tagid={d.id}
-                    className="list-name"
-                    onClick={(e) => handleActiveList(d.id)}
-                    onMouseOver={(e) => setHover(d.id)}
-                    onMouseLeave={(e) => setHover("")}
-                  >
-                    {localLoaded && actID === d.id ? (
-                      <div
-                        className="list-active-bar"
-                        style={
-                          toggle
-                            ? { background: "#20FC8F" }
-                            : { background: "#2e4756" }
-                        }
-                      ></div>
-                    ) : (
-                      ""
-                    )}
-                    <p style={{ textTransform: "capitalize" }}>{d.name}</p>
-                    {hover === d.id ? (
-                      <img
-                        src={trashDark}
-                        alt="#"
-                        onClick={(e) => handleDeleteList(e, d.id)}
-                        style={{ cursor: "pointer", width: "15px" }}
-                      />
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              ))
-            : ""}
+            <div
+              className="dtl-active"
+              style={actID === d.id? { background: "#20FC8F" } : { background: "none" }}
+            ></div>
+            <div
+              className="dt-li-selector"
+              onClick={(e) => handleActiveList(d.id)}
+            >
+              <p>{d.name}</p>
+            </div>
+            <div
+            ref={listItemDltBtn}
+              className="dt-li-delete-btn"
+              onClick={(e) => handleDeleteList(e, d.id)}
+             
+              
+            >
+              <img src={toggle? trashLight: trashDark} alt="#" />
+            </div>
+          </div>
+            ))
+          :''}
+          
           {/* ---------------------------------------- */}
         </div>
       </div>
@@ -253,7 +252,12 @@ export default function ListsSideBar({
                 autoFocus
                 value={listNameVal}
               />
-              <button className="mobile-add-btn" onClick={(e) => handleSubmit(e)}>Add</button>
+              <button
+                className="mobile-add-btn"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Add
+              </button>
             </div>
           ) : (
             ""
@@ -293,8 +297,16 @@ export default function ListsSideBar({
                   </div>
                 </div>
               ))
-            : ''}
-            {data.length === 0 && !mbAdd?<img className="mb-add-list-img" src={addNewListImg} alt="add list" />:""}
+            : ""}
+          {data.length === 0 && !mbAdd ? (
+            <img
+              className="mb-add-list-img"
+              src={addNewListImg}
+              alt="add list"
+            />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

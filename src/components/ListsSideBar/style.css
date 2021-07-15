@@ -79,7 +79,36 @@
   border-radius: 5px 0 0 5px;
   color: black;
 }
-
+/* ---------- new desktop button styles ----- */
+.dtl-list-item{
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  /* background: #bbbbbb; */
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: #313131;
+  cursor: pointer;
+}
+.dt-li-selector{
+  width: 100%;
+  padding: 15px 10px 15px 15px;
+  cursor: pointer;
+}
+.dt-li-selector>p{
+  cursor: pointer;
+}
+.dt-li-delete-btn{
+  padding: 12px;
+  /* background: rgba(240, 240, 240, 0.151); */
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  display: flex;
+}
+.dt-li-delete-btn:hover{
+  background: #b4b4b4;
+}
 /* --------------------- mobile menu styles ---------------------- */
 
 .sbl-mb-overlay-open {
@@ -168,7 +197,7 @@
   margin-bottom: 10px;
 }
 
-.sbl-active {
+.sbl-active, .dtl-active {
   position: absolute;
   bottom: 0;
   left: 0;
