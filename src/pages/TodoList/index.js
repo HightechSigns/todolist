@@ -47,13 +47,16 @@ export default function TodoList() {
   //getting items from DB when page loads
   useEffect(() => {
     getLocalData(dispatch, setlocalLoaded);
+    
+    getName()
+  }, [data]);
+  useEffect(()=>{
     if (toggle){
       document.body.style.background = "#1f1f1f"
     }else{
       document.body.style.background = "white"
     }
-    getName()
-  }, [data,toggle]);
+  },[toggle])
   return (
     <div
       className="todo-main-page"
