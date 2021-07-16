@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/todolist/static/css/main.5e1d8423.chunk.css",
+    "main.css": "/todolist/static/css/main.16855dab.chunk.css",
     "main.js": "/todolist/static/js/main.bb21ae9a.chunk.js",
     "main.js.map": "/todolist/static/js/main.bb21ae9a.chunk.js.map",
     "runtime-main.js": "/todolist/static/js/runtime-main.498a87ae.js",
@@ -8,7 +8,7 @@
     "static/js/2.5a9d3113.chunk.js": "/todolist/static/js/2.5a9d3113.chunk.js",
     "static/js/2.5a9d3113.chunk.js.map": "/todolist/static/js/2.5a9d3113.chunk.js.map",
     "index.html": "/todolist/index.html",
-    "static/css/main.5e1d8423.chunk.css.map": "/todolist/static/css/main.5e1d8423.chunk.css.map",
+    "static/css/main.16855dab.chunk.css.map": "/todolist/static/css/main.16855dab.chunk.css.map",
     "static/js/2.5a9d3113.chunk.js.LICENSE.txt": "/todolist/static/js/2.5a9d3113.chunk.js.LICENSE.txt",
     "static/media/addDark.53394f51.svg": "/todolist/static/media/addDark.53394f51.svg",
     "static/media/addLight.c06c7dd1.svg": "/todolist/static/media/addLight.c06c7dd1.svg",
@@ -21,7 +21,7 @@
   "entrypoints": [
     "static/js/runtime-main.498a87ae.js",
     "static/js/2.5a9d3113.chunk.js",
-    "static/css/main.5e1d8423.chunk.css",
+    "static/css/main.16855dab.chunk.css",
     "static/js/main.bb21ae9a.chunk.js"
   ]
 }
