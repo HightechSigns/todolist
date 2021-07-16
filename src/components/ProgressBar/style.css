@@ -1,0 +1,23 @@
+.progress-bar-cont{
+    /* position:absolute;
+    left:0;
+    top: 0; */
+    margin-top: 10px;
+    width: 565px;
+    height:6px;
+    mix-blend-mode:normal;
+    background-color:#d5dadd;
+    border-radius: 10px;
+}
+.progress{
+    background-color: #00a0b8;
+    height: 100%;
+    border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px){
+	/*Big smartphones [426px -> 600px]*/
+    .progress-bar-cont{
+        width: 100%;
+    }
+}

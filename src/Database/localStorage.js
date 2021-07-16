@@ -1,41 +1,40 @@
-import { getData } from "../actions";
-
-// need to set up local storage for the first time app is open
-export const setupData = (data, actID) => {
-    if (data.length <= 0 && actID === '') {
-        // console.log('setting up local storage for the first time')
-        localStorage.setItem('task-data', JSON.stringify(data));
-        localStorage.setItem('active-List-id', '');
-    }
-    // return true
-}
+import { getData, setActiveId } from "../actions";
 
 // if the local storage comes back with data
 // set the state with the data
-export const getLocalData = (setData) => {
+export const getLocalData = (dispatch, setlocalLoaded) => {
     //set the data
-    let localData = JSON.parse(localStorage.getItem('task-data'))
-    if(localData.length <= 0 ){
-        console.log("nothing to load")
-    }else{
-        console.log("Found some data")
-        setData(getData(localData))
-    }
+    let localData = JSON.parse(localStorage.getItem('task-data'));
+    let localActID = localStorage.getItem('active-List-id');
+    let arr = [];
+    if (localData !== undefined && localData) {
+        localData.map((d,i)=>{
+            dispatch(getData(d))
+        })
+        setlocalLoaded(true)
+    } else { localStorage.setItem('task-data', JSON.stringify(arr)) }
+    localActID !== undefined && localData ? dispatch(setActiveId(localActID)) : localStorage.setItem('active-List-id', '')
 }
 
 // easy function to check active id 
 export const setLocalActiveId = (id) => {
-
+    let localId = localStorage.getItem('active-List-id');
     // set the new active ID if changed or when loaded
     //  check if id is already active or not
-    console.log("updating local storage Active Id")
+    if (localId !== id) {
+        localStorage.setItem('active-List-id', id);
+    } else {
+        console.log("Task List is already active")
+    }
 }
 
 //update the local storage
 // do a check to see if the data in state matches the local data
 // if the state differs, update the local storage
-export const updateLocalData = (data, setData) => {
-    console.log("updating local storage Data")
+export const updateLocalData = (stateData) => {
+    if (stateData.length >= 1) {
+        localStorage.setItem('task-data', JSON.stringify(stateData));
+    }
 }
 
 // if the user wants to delete thier history 

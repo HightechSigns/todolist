@@ -1,0 +1,82 @@
+.menu-icon {
+    display: none;
+    height: 60px;
+    width: 60px;
+    position: absolute;
+    z-index: 99999;
+    border-radius: 100%;
+    bottom: 30px;
+    left: 20px;
+    background: #2E4756;
+    /* box-shadow: 0 6px 13px rgba(0, 0, 0, 0.301); */
+    justify-content: center;
+    align-items: center;
+}
+.icon-cont-open{
+    height: 30px;
+    width: 30px;
+    align-items: center;
+    display: flex;
+    align-items: center;
+}
+.icon-cont{
+    margin: auto;
+    height: 20px;
+    width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.m-icon-item {
+    background: white;
+    height: 3px;
+    border-radius: 100px;
+}
+
+.m-ii-one {
+    width: 25px;
+    transition: 200ms ease-in-out;
+}
+
+.m-ii-two {
+    width: 30px;
+    transition: 200ms ease-out;
+}
+
+.m-ii-three {
+    width: 20px;
+    transition: 200ms ease-out;
+}
+.menu-items-cont{
+    max-height: 900px;
+    transition: max-height 200ms ease-in;
+}
+
+.menu-closed{
+    max-height:0;
+    transition: max-height 340ms ease-out;
+}
+
+/* when menu is open */
+.m-icon-o-one{
+    position: absolute;
+    transform: rotate(45deg);
+    width: 30px;
+    transition: 200ms ease-in;
+}
+.m-icon-o-two{
+    opacity: 0;
+    width: 0px;
+    transition: 100ms ease-out;
+}
+.m-icon-o-three{
+    position: absolute;
+    transform: rotate(-45deg);
+    width: 30px;
+    transition: 200ms ease-in;
+}
+@media only screen and (max-width: 1000px){
+	.menu-icon{
+        display: flex;
+    }
+}

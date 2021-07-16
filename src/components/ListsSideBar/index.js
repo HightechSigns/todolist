@@ -1,17 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import "./style.css";
+// import assets
+import addNewListImg from "../../assets/images/addnewList.png";
 import addLight from "../../assets/images/addLight.svg";
 import addDark from "../../assets/images/addDark.svg";
+import trashDark from "../../assets/images/trashDark.svg";
 import trashLight from "../../assets/images/trashLight.svg";
 import { useDispatch, useSelector } from "react-redux";
+import ProgressNote from "../ProgressNote";
 //import the actions
 import { getData, setActiveId } from "../../actions";
+import {
+  setLocalActiveId,
+  updateLocalData,
+} from "../../Database/localStorage.js";
 
-export default function ListsSideBar({ loaded, setLoaded, listDelete,
-  setListDelete }) {
+export default function ListsSideBar({
+  listDelete,
+  setListDelete,
+  localLoaded,
+  setlocalLoaded,
+  taskSuccess,
+  taskDelete,
+  addTask,
+  setCurrentListName,
+  menuOpen,
+  setMenuOpen,
+}) {
+  const listNameInput = useRef();
+  const listItemDltBtn = useRef();
   const [add, setAdd] = useState(false);
-  const [hover, setHover] = useState(false);
+  const [mbAdd, setMbAdd] = useState(false);
+  const [hover, setHover] = useState("");
   const [listNameVal, setListNameVal] = useState("");
   const actID = useSelector((state) => state.actID);
   const toggle = useSelector((state) => state.toggle);
@@ -22,19 +43,31 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
   const handleChange = (e) => {
     setListNameVal(e.target.value);
   };
+
   // handle the delete of the list
   const handleDeleteList = (e, id) => {
-    console.log("Deleting this List ID");
-    console.log(id);
-    console.log("Deleting this List ID");
+    console.log("delete id = " + id);
+    console.log("active id = " + actID);
+
     if (e) {
-      setListDelete(true)
+      setListDelete(true);
       data.map((d, i) => {
         if (d.id === id) {
-          data.splice(i, 1)
-          console.log('deleted List: ' + id)
+          data.splice(i, 1);
+          console.log("deleted List: " + id);
         }
-      })
+      });
+      if (data.length >= 1) {
+        let newCurrId = data[0].id;
+        setCurrentListName(data[0].name);
+        setLocalActiveId(newCurrId);
+        dispatch(setActiveId(""));
+        dispatch(setActiveId(newCurrId));
+        console.log("new current id apparently = " + newCurrId);
+      } else {
+        console.log("No more lists");
+        setLocalActiveId("");
+      }
     }
   };
   // handle the creating a name
@@ -45,40 +78,49 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
       name: listNameVal,
       tasks: [],
     };
-
     //-----------------------------
-    dispatch(getData(obj))
+    dispatch(getData(obj));
     // console.log("cleared the act id from submit")
     dispatch(setActiveId(obj.id));
-    // set the active list id in storage
-    // localStorage.setItem('active-List-id', obj.id)
-    // ------------
-
-    setLoaded(true)
+    // set the active list id in Local storage
+    setLocalActiveId(obj.id);
+    setCurrentListName(obj.name);
+    // -----------
     setAdd(false);
+    setlocalLoaded(true);
+    setMenuOpen(false);
+    setListNameVal("");
+    setMbAdd(false);
   };
-  // handle the click for adding a name. pops up the modal
-  const handleAddClick = (e) => {
-    if (e && !add) {
-      setAdd(true);
-    } else {
-      setAdd(false);
+  // if user clicks off the iput area for the list, close it
+  const clickOff = (e) => {
+    if (listNameInput.current.contains(e.target)) {
+      return;
     }
+    setAdd(false);
   };
   // handles the active list shows little border on the right
   const handleActiveList = (id) => {
     if (id !== actID) {
-      dispatch(setActiveId(""))
-      dispatch(setActiveId(id))
-      // localStorage.setItem('active-List-id', id)
+      dispatch(setActiveId(""));
+      dispatch(setActiveId(id));
+      setLocalActiveId(id);
+      data.map((d) => {
+        if (d.id === id) {
+          setCurrentListName(d.name);
+        }
+      });
     } else {
-      console.log("List ID is alreaddy active")
+      console.log("List ID is alreaddy active");
     }
   };
   // modal for adding new list
   const AddListModal = () => {
     return (
-      <div className="add-list-name-modal">
+      <div
+        className="add-list-name-modal"
+        style={toggle ? { background: "white" } : { background: "#d5dadd" }}
+      >
         <form onSubmit={(e) => handleSubmit(e)}>
           <input
             className="add-name-input"
@@ -86,70 +128,186 @@ export default function ListsSideBar({ loaded, setLoaded, listDelete,
             onChange={(e) => handleChange(e)}
             type="text"
             placeholder="List Name"
+            autoFocus
           />
         </form>
-        <div className="alnm-triangle"></div>
+        <div
+          className={toggle ? "alnm-triangle a-t-tog" : "alnm-triangle a-t-off"}
+        ></div>
       </div>
     );
   };
   useEffect(() => {
-    console.log("active Id has changed and component has reloaded")
-    setListDelete(false)
+    console.log("active Id has changed and component has reloaded");
+    //click off the input area for adding list name
+    document.addEventListener("mousedown", clickOff);
+    setListDelete(false);
     // need to check local storage to see if anything has changed
     // if changed then post new data to local storage
-    if (data.length >= 1) {
-      // localStorage.setItem('task-data', JSON.stringify(data))
-      // so now if the data changes the local storage data gets updated
+    updateLocalData(data);
+  }, [actID, listDelete]);
+  useEffect(() => {
+    if (mbAdd) {
+      setMbAdd(false);
     }
-  }, [actID, listDelete])
+  }, [menuOpen]);
   return (
-    <div
-      className="sidebar-lists"
-      style={
-        toggle
-          ? { borderRight: " 2px solid white" }
-          : { borderRight: " 2px solid #1f1f1f" }
-      }
-    >
-      <div className="title-add-cont">
-        {add ? AddListModal() : ""}
-        <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
-          Lists
-        </p>
-        <img
-          onClick={(e) => handleAddClick(e)}
-          src={toggle ? addLight : addDark}
-          alt="#"
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-      <div className="list-names-cont">
-        {/* this will be mapped when data gets loaded */}
-        {loaded && data.length >= 1 ? data.map((d, i) => (
-          <div
+    <div>
+      <div className="sidebar-lists">
+        <div className="title-add-cont">
+          {add ? AddListModal() : ""}
+          <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
+            Lists
+          </p>
+          <img
+            ref={listNameInput}
+            onClick={(e) => (add ? setAdd(false) : setAdd(true))}
+            src={toggle ? addLight : addDark}
+            alt="#"
+            style={{ cursor: "pointer" }}
+            role="button"
+            aria-label="Create a new list..."
+          />
+        </div>
+        <div className="list-names-cont">
+          {/* this will be mapped when data gets loaded */}
+          {/* testing new desktop list button */}
+          {localLoaded && data.length >= 1
+            ? data.map((d, i) => (
+              <div
+            className="dtl-list-item"
+            style={
+              toggle
+                ? { background: "none", color: "white" }
+                : { background: "none", color: "#1f1f1f" }
+            }
             key={i}
-            data-tagid={d.id}
-            className="list-name"
-            onClick={(e) => handleActiveList(d.id)}
-            onMouseOver={(e) => setHover(true)}
-            onMouseLeave={(e) => setHover(false)}
           >
-            {loaded && actID === d.id ? <div className="list-active-bar" style={toggle ? { background: '#20FC8F' } : { background: '#2e4756' }}></div> : ''}
-            <p style={{ textTransform: 'capitalize' }}>{d.name}</p>
-            {hover ? (
-              <img
-                src={trashLight}
-                alt="#"
-                onClick={(e) => handleDeleteList(e, d.id)}
-                style={{ cursor: "pointer", width: "15px" }}
-              />
-            ) : (
-              ""
-            )}
+            <ProgressNote
+                    data={d}
+                    taskSuccess={taskSuccess}
+                    taskDelete={taskDelete}
+                    addTask={addTask}
+                  />
+            <div
+              className="dtl-active"
+              style={actID === d.id? { background: "#20FC8F" } : { background: "none" }}
+            ></div>
+            <div
+              className="dt-li-selector"
+              onClick={(e) => handleActiveList(d.id)}
+            >
+              <p>{d.name}</p>
+            </div>
+            <div
+            ref={listItemDltBtn}
+              className="dt-li-delete-btn"
+              onClick={(e) => handleDeleteList(e, d.id)}
+             
+              
+            >
+              <img src={toggle? trashLight: trashDark} alt="#" />
+            </div>
           </div>
-        ))
-          : ""}
-        {/* ---------------------------------------- */}
+            ))
+          :''}
+          
+          {/* ---------------------------------------- */}
+        </div>
+      </div>
+      {/* ------------------ Mobile menu ------------------- */}
+      <div
+        className={menuOpen ? "sbl-mb-overlay-open" : "sbl-mb-overlay-closed"}
+        onClick={(e) => setMenuOpen(false)}
+      >
+        {/* empty */}
+      </div>
+      <div className={menuOpen ? "sbl-mb-cont-open" : "sbl-mb-cont-closed"}>
+        {/* ------------- header for menu ------------- */}
+        <div
+          className="sbl-mb-header"
+          style={menuOpen ? { display: "flex" } : { display: "none" }}
+        >
+          <div className="sbl-mb-h-add">
+            <p style={{ color: "#ffffff50" }}>Lists</p>
+            <img
+              onClick={(e) => (mbAdd ? setMbAdd(false) : setMbAdd(true))}
+              src={addLight}
+              alt="#"
+              className={mbAdd ? "mb-add-img-true" : "mb-add-img-false"}
+              role="button"
+              aria-label="Create a new list..."
+            />
+          </div>
+          {mbAdd ? (
+            <div className="sbl-input-add-cont">
+              <input
+                type="text"
+                placeholder="New List"
+                className="sbl-input"
+                spellcheck="true"
+                onChange={(e) => handleChange(e)}
+                type="text"
+                placeholder="List Name"
+                autoFocus
+                value={listNameVal}
+              />
+              <button
+                className="mobile-add-btn"
+                onClick={(e) => handleSubmit(e)}
+              >
+                Add
+              </button>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        {/* ---------- Lists -------------- */}
+        <div
+          className="sbl-mb-list-cont"
+          style={menuOpen ? { display: "flex" } : { display: "none" }}
+        >
+          {menuOpen && data.length >= 1
+            ? data.map((d, i) => (
+                <div
+                  className="sbl-list-item"
+                  style={{ background: "#243641" }}
+                  key={i}
+                >
+                  <div
+                    className="sbl-active"
+                    style={
+                      actID === d.id
+                        ? { background: "#20FC8F" }
+                        : { background: "none" }
+                    }
+                  ></div>
+                  <div
+                    className="mb-li-selector"
+                    onClick={(e) => handleActiveList(d.id)}
+                  >
+                    <p style={{ color: "white" }}>{d.name}</p>
+                  </div>
+                  <div
+                    className="mb-li-delete-btn"
+                    onClick={(e) => handleDeleteList(e, d.id)}
+                  >
+                    <img src={trashLight} alt="#" />
+                  </div>
+                </div>
+              ))
+            : ""}
+          {data.length === 0 && !mbAdd ? (
+            <img
+              className="mb-add-list-img"
+              src={addNewListImg}
+              alt="add list"
+            />
+          ) : (
+            ""
+          )}
+        </div>
       </div>
     </div>
   );

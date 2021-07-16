@@ -1,16 +1,32 @@
-.todo-main-page{
-    height: 100%;
-    min-height: 100vh;
-    width: 100%;
-}
-.header-main-cont{
+.header-main-cont {
     padding: 60px;
-    
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
-.main-body-cont{
+
+.main-body-cont {
     padding: 0 5rem;
     display: flex;
+}
+
+@media only screen and (max-width: 600px) {
+    /*Big smartphones [426px -> 600px]*/
+    .header-main-cont {
+        padding: 20px;
+    }
+    .on-off-text {
+        font-size: 12px;
+    }
+    .on-off-cont>img {
+        height: 16px;
+    }
+    .mode-selector-cont {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    .main-body-cont {
+        padding: 0 2rem;
+        display: flex;
+    }
 }
