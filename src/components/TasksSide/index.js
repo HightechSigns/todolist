@@ -54,22 +54,26 @@ export default function TasksSide({
     console.log(loadedTasks);
     // console.log("seeing if array state will be 'true'");
     // create the new task obj
-    let taskObj = {
-      id: uuidv4(),
-      text: taskInput,
-      comp: false,
-    };
-    data.map((d, i) => {
-      if (d.id === actID) {
-        let taskList = d.tasks;
-        taskList.push(taskObj);
-      }
-    });
-    // clear the input
-    setTaskInput("");
-    setAddTask(true);
-    // update local storage
-    updateLocalData(data);
+    if(!taskInput){
+      console.log('need to add task data')
+    }else{
+      let taskObj = {
+        id: uuidv4(),
+        text: taskInput,
+        comp: false,
+      };
+      data.map((d, i) => {
+        if (d.id === actID) {
+          let taskList = d.tasks;
+          taskList.push(taskObj);
+        }
+      });
+      // clear the input
+      setTaskInput("");
+      setAddTask(true);
+      // update local storage
+      updateLocalData(data);
+    }
   };
   //need to handle the task success
   const handleTaskSuccess = (e, id) => {
@@ -105,6 +109,7 @@ export default function TasksSide({
           placeholder="Enter A Task"
           style={toggle ? {} : { background: "#2e475633" }}
         />
+        <button className="dt-t-addbtn" >Add</button>
       </form>
     </div>
   );
