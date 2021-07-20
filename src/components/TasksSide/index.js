@@ -3,6 +3,7 @@ import "./style.css";
 import trashLight from "../../assets/images/trashLight.svg";
 import checkLight from "../../assets/images/checkLight.svg";
 import ProgressBar from "../ProgressBar";
+import ProgressNote from "../ProgressNote";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLocalData } from "../../Database/localStorage.js";
@@ -20,15 +21,12 @@ export default function TasksSide({
   getName,
 }) {
   const [loadedTasks, setLoadedTasks] = useState([]);
-  // const [taskSuccess, setTaskSuccess] = useState(false);
-  // const [taskDelete, setTaskDelete] = useState(false);
   const [taskInput, setTaskInput] = useState("");
 
   //redux
   const actID = useSelector((state) => state.actID);
   const toggle = useSelector((state) => state.toggle);
   const data = useSelector((state) => state.data);
-  const dispatch = useDispatch();
   //-----
   // if no items are loaded then this message will show
   const IfNoItems = () => {
@@ -42,10 +40,6 @@ export default function TasksSide({
         </p>
       </div>
     );
-  };
-  //get the data from the activeID
-  const getTasks = () => {
-    // console.log("not connected to DB yet");
   };
   // handle the new task upload
   const handleSubmit = (e) => {
@@ -151,6 +145,13 @@ export default function TasksSide({
       {data.length >= 1 ? (
         <h2 style={{ textTransform: "capitalize", margin: "10px 0 0 0" }}>
           {currentListName}
+          {/* <ProgressNote
+                    data={d}
+                    taskSuccess={taskSuccess}
+                    taskDelete={taskDelete}
+                    addTask={addTask}
+                  /> */}
+                  {/* need to figure out how i made this progress note */}
         </h2>
       ) : (
         ""
