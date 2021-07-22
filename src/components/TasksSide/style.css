@@ -75,10 +75,17 @@
   width: 100%;
 }
 .task-input {
-  width: 100%;
+  width: 80%;
   padding: 15px;
-  border-radius: 5px;
+  border-radius: 5px 0 0 5px;
   outline: none;
+  border: none;
+}
+.dt-t-addbtn{
+width: 17%;
+padding: 15px 0;
+border-radius: 0 5px 5px 0;
+outline: none;
   border: none;
 }
 .task-span {
@@ -89,7 +96,9 @@
   .task-section {
     padding-left: 0px;
   }
- 
+  .dt-t-addbtn{
+    width: 20%;
+    }
 }
 @media only screen and (max-width:1440px) {
   .all-tasks-cont{
