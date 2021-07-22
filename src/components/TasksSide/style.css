@@ -87,6 +87,8 @@ padding: 15px 0;
 border-radius: 0 5px 5px 0;
 outline: none;
   border: none;
+  background:#4e6370;
+  color: white;
 }
 .task-span {
   text-transform: capitalize;
