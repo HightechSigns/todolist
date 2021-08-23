@@ -77,9 +77,14 @@ export default function TasksSide({
         if (d.id === actID) {
           d.tasks.map((t, i) => {
             if (t.id === id) {
-            //   console.log("setting task to complete!");
-            //   console.log(t);
-              return (t.comp = true);
+              if(!t.comp){
+                //   console.log("setting task to complete!");
+                //   console.log(t);
+                return (t.comp = true);
+              }else{
+                return (t.comp=false)
+
+              }
             }
           });
         }
@@ -195,9 +200,8 @@ export default function TasksSide({
                         <div
                           className="custom-checkbox"
                           onClick={(e) => {
-                            !t.comp
-                              ? handleTaskSuccess(e, t.id)
-                              : console.log("Task Has already been completed!");
+                            handleTaskSuccess(e, t.id)
+                              
                           }}
                           style={
                             t.comp
