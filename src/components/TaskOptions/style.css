@@ -1,0 +1,36 @@
+.td-t-o-cont {
+    position: relative;
+}
+
+.td-task-options-btn {
+    width: 25px;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.td-task-options {
+    max-width: 250px;
+    min-height: 200px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    padding: 10px 0;
+    border-radius: 5px;
+}
+
+.td-t-option {
+    padding: 10px 15px;
+    color: white;
+    cursor: pointer;
+}
+
+.td-t-option:hover {
+    background-color: rgb(241, 241, 241);
+}
+
+.delete-task {
+    color: #D81E5B;
+}

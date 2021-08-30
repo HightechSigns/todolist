@@ -7,6 +7,8 @@ import ProgressNote from "../ProgressNote";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLocalData } from "../../Database/localStorage.js";
+// import components
+import TaskOptions from '../TaskOptions';
 
 export default function TasksSide({
   localLoaded,
@@ -48,9 +50,9 @@ export default function TasksSide({
     console.log(loadedTasks);
     // console.log("seeing if array state will be 'true'");
     // create the new task obj
-    if(!taskInput){
+    if (!taskInput) {
       console.log('need to add task data')
-    }else{
+    } else {
       let taskObj = {
         id: uuidv4(),
         text: taskInput,
@@ -77,12 +79,12 @@ export default function TasksSide({
         if (d.id === actID) {
           d.tasks.map((t, i) => {
             if (t.id === id) {
-              if(!t.comp){
+              if (!t.comp) {
                 //   console.log("setting task to complete!");
                 //   console.log(t);
                 return (t.comp = true);
-              }else{
-                return (t.comp=false)
+              } else {
+                return (t.comp = false)
 
               }
             }
@@ -120,7 +122,7 @@ export default function TasksSide({
           d.tasks.map((t, i) => {
             if (t.id === id) {
               d.tasks.splice(i, 1);
-            //   console.log("deleted Task: " + id);
+              //   console.log("deleted Task: " + id);
             }
           });
         }
@@ -156,25 +158,25 @@ export default function TasksSide({
                     taskDelete={taskDelete}
                     addTask={addTask}
                   /> */}
-                  {/* need to figure out how i made this progress note */}
+          {/* need to figure out how i made this progress note */}
         </h2>
       ) : (
         ""
       )}
       {localLoaded && data.length !== 0
         ? data.map((d, i) => {
-            if (d.id === actID) {
-              return (
-                <ProgressBar
-                  data={d.tasks}
-                  taskSuccess={taskSuccess}
-                  listDelete={listDelete}
-                  addTask={addTask}
-                  taskDelete={taskDelete}
-                />
-              );
-            }
-          })
+          if (d.id === actID) {
+            return (
+              <ProgressBar
+                data={d.tasks}
+                taskSuccess={taskSuccess}
+                listDelete={listDelete}
+                addTask={addTask}
+                taskDelete={taskDelete}
+              />
+            );
+          }
+        })
         : ""}
       {!localLoaded || !actID || data.length === 0 ? IfNoItems() : ""}
       {localLoaded && data.length !== 0 ? (
@@ -182,67 +184,73 @@ export default function TasksSide({
           {/* mapped tasks */}
           {data.length >= 1
             ? data.map((d, i) => {
-                if (d.id === actID) {
-                  // console.log(d)
-                  let objTasks = d.tasks;
-                  return objTasks.map((t, i) => (
-                    <div
-                      key={i}
-                      data-taskid={t.id}
-                      className="task-cont"
-                      style={
-                        toggle
-                          ? { background: "#2E4756" }
-                          : { background: "#495a64" }
-                      }
-                    >
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <div
-                          className="custom-checkbox"
-                          onClick={(e) => {
-                            handleTaskSuccess(e, t.id)
-                              
-                          }}
-                          style={
-                            t.comp
-                              ? { background: "#009FB7", cursor: "default" }
-                              : !toggle
+              if (d.id === actID) {
+                // console.log(d)
+                let objTasks = d.tasks;
+                return objTasks.map((t, i) => (
+                  <div
+                    key={i}
+                    data-taskid={t.id}
+                    className="task-cont"
+                    style={
+                      toggle
+                        ? { background: "#2E4756" }
+                        : { background: "#495a64" }
+                    }
+                  >
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <div
+                        className="custom-checkbox"
+                        onClick={(e) => {
+                          handleTaskSuccess(e, t.id)
+
+                        }}
+                        style={
+                          t.comp
+                            ? { background: "#009FB7", cursor: "default" }
+                            : !toggle
                               ? { background: "lightgray", cursor: "pointer" }
                               : { background: "#495a64", cursor: "pointer" }
-                          }
-                        >
-                          {t.comp ? <img src={checkLight} alt="" /> : ""}
-                        </div>
-                        <p
-                          style={
-                            toggle ? { color: "white" } : { color: "white" }
-                          }
-                        >
-                          <span
-                            className="task-span"
-                            style={
-                              t.comp
-                                ? {
-                                    textDecoration: "line-through",
-                                    color: "#ffffff80",
-                                  }
-                                : { textDecoration: "none" }
-                            }
-                          >
-                            {t.text}
-                          </span>
-                        </p>
+                        }
+                      >
+                        {t.comp ? <img src={checkLight} alt="" /> : ""}
                       </div>
-                      <img
+                      <p
+                        style={
+                          toggle ? { color: "white" } : { color: "white" }
+                        }
+                      >
+                        <span
+                          className="task-span"
+                          style={
+                            t.comp
+                              ? {
+                                textDecoration: "line-through",
+                                color: "#ffffff80",
+                              }
+                              : { textDecoration: "none" }
+                          }
+                        >
+                          {t.text}
+                        </span>
+                      </p>
+                    </div>
+                    {/* <img
                         src={trashLight}
                         alt="#"
                         onClick={(e) => handleDeleteTask(e, t.id)}
                         style={{ cursor: "pointer", width: "15px" }}
-                      />
-                    </div>
-                  ));
-                }
-              })
+                      /> */}
+                    <TaskOptions
+                      id={t.id}
+                      setTaskDelete={setTaskDelete}
+                      actID={actID}
+                      data={data}
+                    />
+                  </div>
+                ));
+              }
+            })
             : ""}
           {/* mapped tasks */}
         </div>
