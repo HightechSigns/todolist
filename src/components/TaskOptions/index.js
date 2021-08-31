@@ -8,7 +8,7 @@ export default function TaskOptions({ id, setTaskDelete, actID, data }) {
   // we need button for opening options
   const optionButton = () => (
     <div className="td-task-options-btn" onClick={e => openOverlay? setOpenOverlay(false):setOpenOverlay(true)}>
-      <img src={optionsBtnImg} alt="" />
+      <img src={optionsBtnImg} alt=""/>
     </div>
   );
 
