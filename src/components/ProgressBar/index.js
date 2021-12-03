@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './style.css';
 
 export default function ProgressBar({ data, taskSuccess,
-    listDelete,addTask,taskDelete }) {
+    listDelete,addTask,taskDelete,setCompTaskNum,setTaskNum }) {
     const [progressWidth, setProgressWidth] = useState("")
     // need to have the data for the specific list
     // console.log(data)
@@ -33,6 +33,8 @@ export default function ProgressBar({ data, taskSuccess,
         // if (posWidth >= 97 || posWidth <= 110) {
         //     setProgressWidth("100%")
         // }
+        setTaskNum(a)
+        setCompTaskNum(b)
     }
 
     // and only show for completed tasks

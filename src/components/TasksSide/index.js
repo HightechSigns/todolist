@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateLocalData } from "../../Database/localStorage.js";
 // import components
 import TaskOptions from '../TaskOptions';
+import { act } from "react-dom/test-utils";
 
 export default function TasksSide({
   localLoaded,
@@ -24,6 +25,8 @@ export default function TasksSide({
 }) {
   const [loadedTasks, setLoadedTasks] = useState([]);
   const [taskInput, setTaskInput] = useState("");
+  const [compTaskNum, setCompTaskNum] = useState();
+  const [taskNum, setTaskNum] = useState();
 
   //redux
   const actID = useSelector((state) => state.actID);
@@ -47,7 +50,7 @@ export default function TasksSide({
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("seeing if array state will be 'true'");
-    console.log(loadedTasks);
+    // console.log(loadedTasks);
     // console.log("seeing if array state will be 'true'");
     // create the new task obj
     if (!taskInput) {
@@ -129,7 +132,7 @@ export default function TasksSide({
       });
     }
   };
-
+ 
   // Use effect
   useEffect(() => {
     // getTasks();
@@ -149,9 +152,11 @@ export default function TasksSide({
       <p style={toggle ? { color: "#ffffff50" } : { color: "#1f1f1f" }}>
         Todo's
       </p>
+
       {data.length >= 1 ? (
         <h2 style={{ textTransform: "capitalize", margin: "10px 0 0 0" }}>
           {currentListName}
+
           {/* <ProgressNote
                     data={d}
                     taskSuccess={taskSuccess}
@@ -163,12 +168,15 @@ export default function TasksSide({
       ) : (
         ""
       )}
+      <p>{compTaskNum} out of {taskNum} tasks complete</p>
       {localLoaded && data.length !== 0
         ? data.map((d, i) => {
           if (d.id === actID) {
             return (
               <ProgressBar
                 data={d.tasks}
+                setCompTaskNum={setCompTaskNum}
+                setTaskNum={setTaskNum}
                 taskSuccess={taskSuccess}
                 listDelete={listDelete}
                 addTask={addTask}
