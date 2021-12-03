@@ -4,11 +4,21 @@ import "./style.css";
 import optionsBtnImg from "../../assets/images/optionsbtn.png";
 export default function TaskOptions({ id, setTaskDelete, actID, data }) {
   const [openOverlay, setOpenOverlay] = useState(false);
+  // goal for the TaskOptions Button
+  // need to create the button
+  // when clicked - store task information into redux state
+  // for the options pop up to grab
+
   // options are, edit task, add desc,
   // we need button for opening options
   const optionButton = () => (
-    <div className="td-task-options-btn" onClick={e => openOverlay? setOpenOverlay(false):setOpenOverlay(true)}>
-      <img src={optionsBtnImg} alt=""/>
+    <div
+      className="td-task-options-btn"
+      onClick={(e) =>
+        openOverlay ? setOpenOverlay(false) : setOpenOverlay(true)
+      }
+    >
+      <img src={optionsBtnImg} alt="" />
     </div>
   );
 
@@ -41,10 +51,14 @@ export default function TaskOptions({ id, setTaskDelete, actID, data }) {
     </div>
   );
   useEffect(() => {}, []);
+  // Going to ove the options to the main component so it renders as a larger popup
+  // This button will store the task information to the state
+
   return (
     <div className="td-t-o-cont">
       {optionButton()}
-      {openOverlay && taskOptions()}
+
+      {/* {openOverlay && taskOptions()} */}
     </div>
   );
 }
